@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html">
+    <meta charset="utf-8">
+    <title>天窗设计</title>
+    <base th:href="@{/}">
+    <link href="css/normalize.css" rel="stylesheet" />
+    <link href="css/jquery-ui.css" rel="stylesheet" />
+    <link href="css/jquery.idealforms.min.css" rel="stylesheet" media="screen" />
+
+    <script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript" src="js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="js/jquery.idealforms.js"></script>
+    <style type="text/css">
+    body {
+        font: normal 15px/1.5 Arial, Helvetica, Free Sans, sans-serif;
+        color: #222;
+        background: url(pattern.png);
+        overflow-y: scroll;
+        padding: 60px 0 0 0;
+    }
+
+    #my-form {
+        width: 755px;
+        margin: 0 auto;
+        border: 1px solid #ccc;
+        padding: 3em;
+        border-radius: 3px;
+        box-shadow: 0 0 2px rgba(0, 0, 0, .2);
+    }
+
+    #comments {
+        width: 350px;
+        height: 100px;
+    }
+</style>
+</head>
+
+
+<body>
+    <div class="row">
+
+        <div class="eightcol last">
+            <form id="my-form" method="post" action="/design/handle">
+                <section name="经纬度">
+                    <div>
+                        <div><label for="lon">经度</label> <input id="lon" name="lon" type="number" min="-180.00"
+                             value="0"   max="180.00" step="0.01" required />
+                        </div>
+                        <div><label for="lat">纬度</label><input id="lat" name="lat" type="number" min="-90.00"
+                             value="0"   max="90.00" step="0.01" required />
+                        </div>
+                    </div>
+                </section>
+                <section name="角度">
+                    <div><label for="azimuth">方位角</label>
+                        <input id="azimuth" name="azimuth" type="number" min="-90.00" max="90.00" step="0.01" value="0" required>
+                    </div>
+                    <div><label for="userAngle">自定义</label>
+                        <input id="userAngle" name="userAngle" type="number" min="-90.00" max="90.00" step="0.01"
+                            value="0" required /></div>
+                </section>
+                <section name="选择光伏板">
+                    <div>
+                        <label >选择你使用的的光伏</label><br><br>
+                        <label for="photovoltaicPanelType1"><input id="photovoltaicPanelType1"
+                                name="photovoltaicPanelType" type="radio" checked value="0" />单晶硅太阳能板</label>
+                        <label for="photovoltaicPanelType2"><input id="photovoltaicPanelType2"
+                                name="photovoltaicPanelType" type="radio" value="1" />化合物太阳能板</label>
+                        <label for="photovoltaicPanelType3"><input id="photovoltaicPanelType3"
+                                name="photovoltaicPanelType" type="radio" value="2" />多晶硅太阳能板</label>
+                        <label for="photovoltaicPanelType4"><input id="photovoltaicPanelType4"
+                                name="photovoltaicPanelType" type="radio" value="3" />非晶硅太阳能板</label>
+                    </div>
+                </section>
+                <section name="选择房屋">
+                    <div>
+                        <label>选择你的房屋类型</label><br><br>
+                        <label for="houseType1"><input id="houseType1" name="houseType" type="radio" checked
+                                value="0" />传统房屋</label>
+                        <label for="houseType2"><input id="houseType2" name="houseType" type="radio"
+                                value="1" />传统平房</label>
+                        <label for="houseType3"><input id="houseType3" name="houseType" type="radio"
+                                value="2" />采光房</label>
+                        <label for="houseType4"><input id="houseType4" name="houseType" type="radio"
+                                value="3" />大型建筑</label>
+                    </div>
+                    <div>
+                        <label>建筑类型</label>
+                        <select name="buildingType">
+                            <option value="0">办公</option>
+                            <option value="1">学校</option>
+                            <output value="2">旅馆</output>
+                            <option value="3">医院</option>
+                            <option value="4">展览</option>
+                            <option value="5">交通</option>
+                            <option value="6">体育</option>
+                            <option value="7">工业</option>
+                        </select>
+                    </div>
+                </section>
+                <section name="窗户选择">
+                    <div>
+                        <label>玻璃材料规格</label>
+                        <select name="glassType" id="glassType">
+                            <option value="0">单层玻璃</option>
+                            <option value="1">夹层玻璃</option>
+                            <option value="2">中空玻璃</option>
+                            <option value="3">镀膜玻璃</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>玻璃材料类型</label>
+                        <span id='ee'>
+                            <select name="glassSpecifications" id="glassSpecifications">
+                                <option value="0">普通白玻</option>
+                                <option value="1">超白玻璃</option>
+                                <output value="2">浅蓝玻璃</output>
+                                <option value="3">水晶灰玻</option>
+                            </select>
+                        </span>
+                    </div>
+                    <div>
+                        <label>窗框种类</label>
+                        <select name="windowsType">
+                            <option value='0'>单层</option>
+                            <option value="1">双层</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>窗框材料</label>
+                        <select name="windowsMaterial">
+                            <option value="0">木窗</option>
+                            <option value="1">铝窗</option>
+                            <output value="2">钢窗</output>
+                            <option value="3">塑料窗</option>
+                        </select>
+                    </div>
+                </section>
+                <section name="房屋设置">
+                    <div>
+                        <label for="houseLength">房屋长度</label>
+                        <input id="houseLength" name="houseLength" type="number" min="0" step="0.1" value="10" required />
+                    </div>
+                    <div>
+                        <label for="houseHigh">房屋高度</label>
+                        <input id="houseHigh" name="houseHigh" type="number" min="0" step="0.1" value="10" required />
+                    </div>
+                    <div>
+                        <label for="houseWidth">房屋宽度</label>
+                        <input id="houseWidth" name="houseWidth" type="number" min="0" step="0.1" value="10" required />
+                    </div>
+                    <div>
+                        <label>棚顶反射比</label>
+                        <select name="shedReflect">
+                            <option value="0">0.8</option>
+                            <option value="1">0.5</option>
+                            <option value="2">0.2</option>
+                        </select>
+                    </div><br>
+                    <div>
+                        <label>墙面反射比</label>
+                        <select name="wallReflect">
+                            <option value="0">0.5</option>
+                            <option value="1">0.3</option>
+                            <option value="2">0.1</option>
+                        </select>
+                    </div>
+                </section>
+                <section name="地区设置">
+                    <div>
+                        <label>光气候区</label>
+                        <select name="lightClimate">
+                            <option value="0">Ⅰ区</option>
+                            <option value="1">Ⅱ区</option>
+                            <option value="2">Ⅲ区</option>
+                            <option value="3">Ⅳ区</option>
+                            <option value="4">Ⅴ区</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>采光等级</label>
+                        <select name="lightLevel">
+                            <option value="0">Ⅰ型</option>
+                            <option value="1">Ⅱ型</option>
+                            <option value="2">Ⅲ型</option>
+                            <option value="3">Ⅳ型</option>
+                            <option value="4">Ⅴ型</option>
+                        </select>
+                    </div>
+                    <div>
+                        <hr/>
+                    </div>
+                    <div>
+                        <button type="submit">提交</button>
+                    </div>
+                </section>
+
+
+            </form>
+        </div>
+    </div>
+    <script type="text/javascript" th:inline="javascript">
+        var glassTy = [ ["普通白玻", "超白玻璃", "浅蓝玻璃", "水晶灰玻"], ["6C+1.52PVB+6C", "3C+0.38PVB+3C", "3F+0.38PVB+3C", "6C+0.76PVB+6C", "6F+0.38PVB+6C"], ["高透Low-E1", "高透Low-E2", "遮阳灰", "遮阳浅蓝灰", "双银Low-E"], ["热反射镀膜玻璃", "硬镀膜纸辐射玻璃3", "硬镀膜纸辐射玻璃4",
+            "硬镀膜纸辐射玻璃5", "硬镀膜纸辐射玻璃6", "硬镀膜纸辐射玻璃8", "硬镀膜纸辐射玻璃10",
+            "硬镀膜纸辐射玻璃12", "硬镀膜纸辐射玻璃6(金)", "硬镀膜纸辐射玻璃8(金)"]];
+
+        $('#glassType').change(function () {
+            index = $('#glassType').children('option:selected').index();
+            var selectarr = $('#ee').find('select');
+            for (var i = 0; i < selectarr.length; i++) {
+                var slt_td = $(selectarr[i]).parent();
+                slt_td.empty();
+                var slt = $('<select name="glassSpecifications" id="glassSpecifications"></select>')
+                var type = glassTy[index];
+                for (var i = 0; i < type.length; i++) {
+                    var option = getOption(i, type[i]);
+                    slt.append(option);
+                }
+                slt_td.append(slt);
+            }
+        })
+
+        function getOption(value, text) {
+            var option = $('<option value="' + value + '">' + text + '</option>');
+            return option;
+        }
+    </script>
+    <script>
+        var options = {
+
+            onFail: function () {
+                alert($myform.getInvalid().length + ' invalid fields.')
+            },
+
+            inputs: {
+                'password': {
+                    filters: 'required pass',
+                },
+                'username': {
+                    filters: 'required username',
+                    data: {
+                        //ajax: { url:'validate.php' }
+                    }
+                },
+                'file': {
+                    filters: 'extension',
+                    data: { extension: ['jpg'] }
+                },
+                'comments': {
+                    filters: 'min max',
+                    data: { min: 50, max: 200 }
+                },
+                'states': {
+                    filters: 'exclude',
+                    data: { exclude: ['default'] },
+                    errors: {
+                        exclude: '选择国籍.'
+                    }
+                },
+                'langs[]': {
+                    filters: 'min max',
+                    data: { min: 2, max: 3 },
+                    errors: {
+                        min: 'Check at least <strong>2</strong> options.',
+                        max: 'No more than <strong>3</strong> options allowed.'
+                    }
+                }
+            }
+
+        };
+
+        var $myform = $('#my-form').idealforms(options).data('idealforms');
+
+
+
+        $myform.focusFirst();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qianxu.sunbest.dao.DIFFDao">
+
+
+    <select id="getAll" resultType="com.qianxu.sunbest.model.DIFF">
+        select * from DIFF diff
+    </select>
+
+    <select id="getByLATAndLON" resultType="com.qianxu.sunbest.model.DIFF">
+        select * from DIFF diff
+        <where>
+            diff.lat=#{lat} AND diff.lon=#{lon}
+        </where>
+    </select>
+
+</mapper>

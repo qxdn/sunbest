@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qianxu.sunbest.dao.SFCDao">
+
+
+    <select id="getAll" resultType="com.qianxu.sunbest.model.SFC">
+        select * from SFC sfc
+    </select>
+
+    <select id="getByLATAndLON" resultType="com.qianxu.sunbest.model.SFC">
+        select * from SFC sfc
+        <where>
+            sfc.lat=#{lat} AND sfc.lon=#{lon}
+        </where>
+    </select>
+
+</mapper>
