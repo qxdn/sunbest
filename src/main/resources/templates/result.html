@@ -11,26 +11,24 @@
 
 
 <body>
-<div>
-
-    <body>
     <div>
-        <ol>
-            <li>
-                <div>
-                    <label>输入数据</label>
-                    <hr>
-                    <p>经度:<span th:text="${answer.lon}"></span>°</p>
-                    <p>纬度:<span th:text="${answer.lat}"></span>°</p>
-                    <p>设定角度:<span th:text="${answer.userAngle}"></span>°</p>
-                    <hr>
-                </div>
-            </li>
-            <li>
-                <div>
-                    <label>计算结果</label>
-                    <hr>
-                    <p>最佳倾角:<span th:text="${#numbers.formatDecimal(answer.bestAngle,1,2)}"></span>°</p>
+        <div>
+            <ol>
+                <li>
+                    <div>
+                        <label>输入数据</label>
+                        <hr>
+                        <p>经度:<span th:text="${answer.lon}"></span>°</p>
+                        <p>纬度:<span th:text="${answer.lat}"></span>°</p>
+                        <p>设定角度:<span th:text="${answer.userAngle}"></span>°</p>
+                        <hr>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <label>计算结果</label>
+                        <hr>
+                        <p>最佳倾角:<span th:text="${#numbers.formatDecimal(answer.bestAngle,1,2)}"></span>°</p>
                     <p>年平均发电量:<span th:text="${#numbers.formatDecimal(answer.averagePowerGeneration,1,2)}"></span> kWh/m²/day</p>
                     <p>开窗面积<span th:text="${#numbers.formatDecimal(answer.area,1,2)}"></span>m²</p>
                     <hr>
@@ -46,6 +44,9 @@
             </li>
         </ol>
     </div>
+    <script>
+        alert("[[${answer.bestPower}]]");
+    </script>
 </body>
 
 
