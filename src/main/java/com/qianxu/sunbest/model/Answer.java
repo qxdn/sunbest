@@ -3,8 +3,6 @@ package com.qianxu.sunbest.model;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Map;
-
 @Getter
 @Setter
 public class Answer {
@@ -26,7 +24,7 @@ public class Answer {
     private Double area;
 
     //最佳发电效率
-    private Map<Integer,Double> bestPower;
+    private double[] bestPower;
     //当前发电效率
-    private Map<Integer,Double> currentPower;
+    private double[] currentPower;
 }

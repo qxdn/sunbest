@@ -49,28 +49,4 @@ public class DaoTest {
         System.out.println(sfc);
     }
 
-
-    @Test
-    void getAllDIFFTest(){
-        List<DIFF> diffs =diffDao.getAll();
-        for(DIFF diff:diffs){
-            System.out.println(diff);
-        }
-    }
-
-    @Test
-    void getAllDNRTest(){
-        List<DNR> dnrs =dnrDao.getAll();
-        for(DNR dnr:dnrs){
-            System.out.println(dnr);
-        }
-    }
-
-    @Test
-    void getAllSFCTest(){
-        List<SFC> sfcs =sfcDao.getAll();
-        for(SFC sfc:sfcs){
-            System.out.println(sfc);
-        }
-    }
 }

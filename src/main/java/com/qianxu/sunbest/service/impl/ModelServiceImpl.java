@@ -37,14 +37,24 @@ public class ModelServiceImpl implements ModelService {
         double lat = userDefine.getLat();
         double lon = userDefine.getLon();
         //优化数据
-        if(Math.max(Math.abs((int)(Math.round(Math.abs(lat)*100))%100-25),25) != 25)
-            lat = Math.floor(lat)+(lat>0?0.75:0.25);
+//        if(Math.max(Math.abs((int)(Math.round(Math.abs(lat)*100))%100-25),25) != 25)
+//            lat = Math.floor(lat)+(lat>0?0.75:0.25);
+//        else
+//            lat = Math.floor(lat)+(lat>0?0.25:0.75);
+//        if(Math.max(Math.abs((int)(Math.round(Math.abs(lon)*100))%100-25),25) != 25)
+//            lon = Math.floor(lon)+(lon>0?0.75:0.25);
+//        else
+//            lon = Math.floor(lon)+(lon>0?0.25:0.75);
+        int num1at = Math.abs((int)(Math.round(Math.abs(lat)*100))%100);
+        int numlon = Math.abs((int)(Math.round(Math.abs(lon)*100))%100);
+        if( num1at >= 0 && num1at <= 49  )
+            lat = lat>=0?(Math.floor(lat)+0.25):(Math.ceil(lat)-0.25);
         else
-            lat = Math.floor(lat)+(lat>0?0.25:0.75);
-        if(Math.max(Math.abs((int)(Math.round(Math.abs(lon)*100))%100-25),25) != 25)
-            lon = Math.floor(lon)+(lon>0?0.75:0.25);
+            lat = lat>=0?(Math.floor(lat)+0.75):(Math.ceil(lat)-0.75);
+        if( numlon >= 0 && numlon <= 49  )
+            lon = lon>=0?(Math.floor(lon)+0.25):(Math.ceil(lon)-0.25);
         else
-            lon = Math.floor(lon)+(lon>0?0.25:0.75);
+            lon = lon>=0?(Math.floor(lon)+0.75):(Math.ceil(lon)-0.75);
 
         DIFF diff = diffDao.getByLATAndLON(lat,lon);
         DNR dnr = dnrDao.getByLATAndLON(lat,lon);
@@ -103,12 +113,12 @@ public class ModelServiceImpl implements ModelService {
             delta[i] = E_0-Lb[i]*C_av;
         double sum = light.Saving(E_0,roof,wall,l,b_room,delta);
 
-        Map<Integer,Double> bestpower = new HashMap<>();
-        Map<Integer,Double> currentpower = new HashMap<>();
-        for(int i = 0;i < handle.n.length;i++) {
-            bestpower.put((int)Math.ceil(handle.n[i]/30.0), Ht_effmax[i]);
-            currentpower.put((int)Math.ceil(handle.n[i]/30.0),Ht_eff[i]);
-        }
+//        Map<Integer,Double> bestpower = new HashMap<>();
+//        Map<Integer,Double> currentpower = new HashMap<>();
+//        for(int i = 0;i < handle.n.length;i++) {
+//            bestpower.put((int)Math.ceil(handle.n[i]/30.0), Ht_effmax[i]);
+//            currentpower.put((int)Math.ceil(handle.n[i]/30.0),Ht_eff[i]);
+//        }
 
         answer.setLat(lat);
         answer.setLon(lon);
@@ -118,8 +128,8 @@ public class ModelServiceImpl implements ModelService {
         answer.setExpectPowerGeneration(handle.avrg_userHt(Ht_eff)*365);
         answer.setAveragePowerGeneration(handle.avrg_userHt(Ht_eff));
         answer.setArea(Ad);
-        answer.setBestPower(bestpower);
-        answer.setCurrentPower(currentpower);
+        answer.setBestPower(Ht_effmax);
+        answer.setCurrentPower(Ht_eff);
 
 
         return answer;

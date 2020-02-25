@@ -43,11 +43,12 @@
                 </div>
             </li>
         </ol>
+            <hr>
     </div>
-        <div id="show" style="width: 600px;height:400px;">
+        <div id="show" style="width: 1500px;height:600px;">
 
         </div>
-    <script>
+    <script th:inline="javascript">
         var myChart = echarts.init(document.getElementById('show'));
         var option = {
         title: {
@@ -60,16 +61,44 @@
         xAxis: {
             data: ["1月", "2月", "3月", "4月", "5月", "6月","7月","8月","9月","10月","11月","12月"]
         },
-      yAxis: {},
+      yAxis: {
+          axisLabel: {
+            formatter: '{value} (KW*H/Day)'
+        }
+      },
       series: [{
         name: '最佳发电效率',
         type: 'bar',
-        data: [5 ,20, 36, 10, 10, 20,5, 20, 36, 10, 10, 20]
+         itemStyle: {
+          barBorderRadius: 5,
+          color: new echarts.graphic.LinearGradient(
+            0, 0, 0, 1,
+            [
+              { offset: 0, color: '#14c8d4' },
+              { offset: 1, color: '#43eec6' }
+            ]
+          )
+        },
+        data: [[${answer.bestPower}]]
       }, {
         name: '当前发电效率',
         type: 'bar',
-        data: [55, 566, 36, 10, 10, 20,55, 566, 36, 10, 10, 20]
-      }]
+        itemStyle: {
+          barBorderRadius: 5,
+          color: new echarts.graphic.LinearGradient(
+            0, 0, 0, 1,
+            [
+              { offset: 0, color: '#FF0000' },
+              { offset: 1, color: '#000000' }
+            ]
+          )
+        },
+        data: [[${answer.currentPower}]]
+      }],
+      animationEasing: 'elasticOut',
+      animationDelayUpdate: function (idx) {
+        return idx * 5;
+      }
     };
     myChart.setOption(option);
     </script>
