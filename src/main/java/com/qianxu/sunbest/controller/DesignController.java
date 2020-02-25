@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
 
 @Controller
 @RequestMapping("/design")
@@ -18,15 +20,23 @@ public class DesignController {
     ModelService modelService;
 
     @PostMapping("/handle")
-    @ResponseBody
-    public Answer submit(UserDefine userDefine){
+    public ModelAndView submit(UserDefine userDefine){
         Answer answer=modelService.getAnswer(userDefine);
-        return answer;
+        ModelAndView mv=new ModelAndView();
+        mv.setViewName("result");
+        mv.addObject("answer",answer);
+        return mv;
     }
 
     @RequestMapping("/toDesign")
     public String toDesign(){
-        return "design.html";
+        return "design";
     }
 
+
+    @RequestMapping("/api")
+    @ResponseBody
+    public Answer designApi(UserDefine userDefine){
+        return  modelService.getAnswer(userDefine);
+    }
 }
