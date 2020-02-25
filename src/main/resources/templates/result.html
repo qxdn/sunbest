@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <base th:href="@{/}">
     <title>节能效果</title>
-
+    <script type="text/javascript" src="js/echarts.min.js"></script>
 </head>
 
 
@@ -44,8 +44,34 @@
             </li>
         </ol>
     </div>
+        <div id="show" style="width: 600px;height:400px;">
+
+        </div>
     <script>
-        alert("[[${answer.bestPower}]]");
+        var myChart = echarts.init(document.getElementById('show'));
+        var option = {
+        title: {
+            text: '预期发电效率'
+        },
+        tooltip: {},
+        legend: {
+            data: ['最佳发电效率','当前发电效率']
+        },
+        xAxis: {
+            data: ["1月", "2月", "3月", "4月", "5月", "6月","7月","8月","9月","10月","11月","12月"]
+        },
+      yAxis: {},
+      series: [{
+        name: '最佳发电效率',
+        type: 'bar',
+        data: [5 ,20, 36, 10, 10, 20,5, 20, 36, 10, 10, 20]
+      }, {
+        name: '当前发电效率',
+        type: 'bar',
+        data: [55, 566, 36, 10, 10, 20,55, 566, 36, 10, 10, 20]
+      }]
+    };
+    myChart.setOption(option);
     </script>
 </body>
 
