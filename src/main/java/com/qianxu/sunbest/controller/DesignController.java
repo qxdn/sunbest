@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.text.DecimalFormat;
+
 
 @Controller
 @RequestMapping("/design")
@@ -35,8 +37,10 @@ public class DesignController {
 
     @PostMapping("/BestAngle")
     @ResponseBody
-    public Double getBestAngle(Predict predict){
-        return 23.2;
+    public String getBestAngle(Predict predict){
+        DecimalFormat df=new DecimalFormat("#0.00");
+        Double angle= modelService.getBestAngle(predict);
+        return df.format(angle);
     }
 
 
