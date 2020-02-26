@@ -135,4 +135,9 @@ public class ModelServiceImpl implements ModelService {
         return answer;
     }
 
+    @Override
+    public Double getBestAngle(Predict predict) {
+        return null;
+    }
+
 }
