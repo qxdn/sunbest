@@ -154,6 +154,7 @@ public class ModelServiceImpl implements ModelService {
         DNR dnr = dnrDao.getByLATAndLON(lat,lon);
         ArrayList<Double> Hb = handle.getHb(dnr);
         ArrayList<Double> Hd = handle.getHd(diff);
+        handle.arrangeData(Hb,Hd,handle.n);
 
         return handle.avrg_bestAngle(predict.getAzimuth()>0?'n':'y',lat,handle.paraCal(handle.n),
                 Hb,Hd,predict.getAzimuth());
