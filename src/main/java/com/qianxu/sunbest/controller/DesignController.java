@@ -1,7 +1,7 @@
 package com.qianxu.sunbest.controller;
 
-
 import com.qianxu.sunbest.model.Answer;
+import com.qianxu.sunbest.model.Predict;
 import com.qianxu.sunbest.model.UserDefine;
 import com.qianxu.sunbest.service.api.ModelService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,8 +33,14 @@ public class DesignController {
         return "design";
     }
 
+    @PostMapping("/BestAngle")
+    @ResponseBody
+    public Double getBestAngle(Predict predict){
+        return 23.2;
+    }
 
-    @RequestMapping("/api")
+
+    @PostMapping("/api")
     @ResponseBody
     public Answer designApi(UserDefine userDefine){
         return  modelService.getAnswer(userDefine);
