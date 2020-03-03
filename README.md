@@ -1,4 +1,6 @@
 ## 节能减排模型
+![AppVeyor](https://img.shields.io/appveyor/build/qxdn/sunbest)
+
 根据经纬度，天气等约束，计算天窗最佳角度，每年节能效率。
 
 ## 模型来源
