@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html  xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="utf-8">
@@ -29,14 +29,14 @@
                 <label class="layui-form-label">经度</label>
                 <div class="layui-input-block">
                     <input type="text" id="lon" name="lon" lay-verify="required|number|lon" lay-reqtext="经度不能为空"
-                        placeholder="请输入" autocomplete="off" class="layui-input">
+                        placeholder="请输入" value="0" class="layui-input">
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">纬度</label>
                 <div class="layui-input-block">
                     <input type="text" id="lat" name="lat" lay-verify="required|number|lat" lay-reqtext="纬度不能为空"
-                        placeholder="请输入" autocomplete="off" class="layui-input">
+                        placeholder="请输入" value="0" class="layui-input">
                 </div>
             </div>
         </div>
@@ -46,7 +46,7 @@
                 <label class="layui-form-label">方位角</label>
                 <div class="layui-input-block">
                     <input type="text" id="azimuth" name="azimuth" lay-verify="required|number|azimuth"
-                        lay-reqtext="方位角不能为空" placeholder="请输入" autocomplete="off" class="layui-input">
+                        lay-reqtext="方位角不能为空" placeholder="请输入" value="0" class="layui-input">
                 </div>
             </div>
             <div class="layui-inline">
@@ -56,6 +56,9 @@
                         lay-reqtext="用户不能为空" placeholder="请输入" autocomplete="off" class="layui-input">
                 </div>
             </div>
+            <div class="layui-inline">
+                <button type="button" class="layui-btn" id="predict">预测倾角</button>
+            </div>
         </div>
 
         <!--光伏-->
@@ -64,7 +67,7 @@
                 <label class="layui-form-label">光伏类型</label>
                 <div class="layui-input-block">
                     <select name="photovoltaicPanelType">
-                        <option value="0" selected="">单晶硅太阳能板</option>
+                        <option value="0">单晶硅太阳能板</option>
                         <option value="1">化合物太阳能板</option>
                         <option value="2">多晶硅太阳能板</option>
                         <option value="3">非晶硅太阳能板</option>
@@ -78,7 +81,7 @@
                 <label class="layui-form-label">房屋类型</label>
                 <div class="layui-input-block">
                     <select name="houseType">
-                        <option value="0" selected="">传统房屋</option>
+                        <option value="0">传统房屋</option>
                         <option value="1">传统平房</option>
                         <option value="2">采光房</option>
                         <option value="3">大型建筑</option>
@@ -89,7 +92,7 @@
                 <label class="layui-form-label">建筑类型</label>
                 <div class="layui-input-block">
                     <select name="buildingType">
-                        <option value="0" selected="">办公</option>
+                        <option value="0">办公</option>
                         <option value="1">学校</option>
                         <output value="2">旅馆</output>
                         <option value="3">医院</option>
@@ -231,16 +234,19 @@
     </form>
 
     <script>
-         var glassTy = [ ["普通白玻", "超白玻璃", "浅蓝玻璃", "水晶灰玻"], ["6C+1.52PVB+6C", "3C+0.38PVB+3C", "3F+0.38PVB+3C", "6C+0.76PVB+6C", "6F+0.38PVB+6C"], ["高透Low-E1", "高透Low-E2", "遮阳灰", "遮阳浅蓝灰", "双银Low-E"], ["热反射镀膜玻璃", "硬镀膜纸辐射玻璃3", "硬镀膜纸辐射玻璃4",
-            "硬镀膜纸辐射玻璃5", "硬镀膜纸辐射玻璃6", "硬镀膜纸辐射玻璃8", "硬镀膜纸辐射玻璃10",
-            "硬镀膜纸辐射玻璃12", "硬镀膜纸辐射玻璃6(金)", "硬镀膜纸辐射玻璃8(金)"]];
+        var glassTy = [
+                    ["普通白玻", "超白玻璃", "浅蓝玻璃", "水晶灰玻"], 
+                    ["6C+1.52PVB+6C", "3C+0.38PVB+3C", "3F+0.38PVB+3C", "6C+0.76PVB+6C", "6F+0.38PVB+6C"],
+                    ["高透Low-E1", "高透Low-E2", "遮阳灰", "遮阳浅蓝灰", "双银Low-E"], 
+                    ["热反射镀膜玻璃", "硬镀膜纸辐射玻璃3", "硬镀膜纸辐射玻璃4", "硬镀膜纸辐射玻璃5", "硬镀膜纸辐射玻璃6", "硬镀膜纸辐射玻璃8", "硬镀膜纸辐射玻璃10", "硬镀膜纸辐射玻璃12", "硬镀膜纸辐射玻璃6(金)", "硬镀膜纸辐射玻璃8(金)"]
+                ];
 
         layui.use(['form'], function () {
             var form = layui.form;
-            $=layui.jquery;
+            $ = layui.jquery;
 
-            form.on("select(glassType)",function(data){
-                var index=data.elem.value;
+            form.on("select(glassType)", function (data) {
+                var index = data.elem.value;
                 var type = glassTy[index];
                 $("select[name='glassSpecifications']").empty();
                 for (var i = 0; i < type.length; i++) {
@@ -248,6 +254,25 @@
                     $("select[name='glassSpecifications']").append(option);
                 }
                 form.render('select');
+            })
+
+            $("#predict").click(function () {
+                $.ajax({
+                    type: "post",
+                    url: "/design/BestAngle",
+                    data: {
+                        lon: $("#lon").val(),
+                        lat: $("#lat").val(),
+                        azimuth: $("#azimuth").val(),
+                    },
+                    dataType: "json",
+                    success: function (data) {
+                        layer.msg("最佳倾角:" + data + "°");
+                    },
+                    error:function(data){
+                        layer.msg("出错啦");
+                    }
+                });
             })
 
             //自定义验证规则
@@ -285,7 +310,7 @@
         });
 
         function getOption(value, text) {
-            var option = "<option value='" +value + "'>" + text + "</option>";
+            var option = "<option value='" + value + "'>" + text + "</option>";
             return option;
         }
     </script>
