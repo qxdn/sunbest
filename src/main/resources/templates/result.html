@@ -6,48 +6,61 @@
     <meta charset="utf-8">
     <base th:href="@{/}">
     <title>节能效果</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="stylesheet" href="layui/css/layui.css" media="all">
     <script type="text/javascript" src="js/echarts.min.js"></script>
+    <script src="layui/layui.js" charset="utf-8"></script>
 </head>
 
 
 <body>
-    <div>
-        <div>
-            <ol>
-                <li>
-                    <div>
-                        <label>输入数据</label>
-                        <hr>
-                        <p>经度:<span th:text="${answer.lon}"></span>°</p>
-                        <p>纬度:<span th:text="${answer.lat}"></span>°</p>
-                        <p>设定角度:<span th:text="${answer.userAngle}"></span>°</p>
-                        <hr>
-                    </div>
-                </li>
-                <li>
-                    <div>
-                        <label>计算结果</label>
-                        <hr>
-                        <p>最佳倾角:<span th:text="${#numbers.formatDecimal(answer.bestAngle,1,2)}"></span>°</p>
-                    <p>年平均发电量:<span th:text="${#numbers.formatDecimal(answer.averagePowerGeneration,1,2)}"></span> kWh/m²/day</p>
-                    <p>开窗面积<span th:text="${#numbers.formatDecimal(answer.area,1,2)}"></span>m²</p>
-                    <hr>
-                </div>
-            </li>
-            <li>
-                <div>
-                    <label>节能效果</label>
-                    <hr>
-                    <p>节约照明用电:<span th:text="${#numbers.formatDecimal(answer.savePower,1,2)}"></span>kw/h</p>
-                    <p>年预计发电量:<span th:text="${#numbers.formatDecimal(answer.expectPowerGeneration,1,2)}"></span>°</p>
-                </div>
-            </li>
-        </ol>
-            <hr>
+    <!--顶部导航改href-->
+  <ul class="layui-nav layui-bg-cyan">
+    <li class="layui-nav-item "><a href="index.html">首页</a></li>
+    <li class="layui-nav-item "><a href="design.html">天窗设计</a></li>
+    <li class="layui-nav-item layui-this"><a href="result.html">节能效果</a></li>
+  </ul>
+  <div layui-main>
+    <div style="padding: 20px; background-color: #F2F2F2;">
+      <div class="layui-row layui-col-space15">
+        <div class="layui-col-md6">
+          <div class="layui-card">
+            <div class="layui-card-header">输入数据</div>
+            <div class="layui-card-body">
+              <p>经度:<span th:text="${answer.lon}"></span>°</p>
+              <p>纬度:<span th:text="${answer.lat}"></span>°</p>
+              <p>设定角度:<span th:text="${answer.userAngle}"></span>°</p>
+            </div>
+          </div>
+        </div>
+        <div class="layui-col-md6">
+          <div class="layui-card">
+            <div class="layui-card-header">计算结果</div>
+            <div class="layui-card-body">
+              <p>最佳倾角:<span th:text="${#numbers.formatDecimal(answer.bestAngle,1,2)}"></span>°</p>
+              <p>年平均发电量:<span th:text="${#numbers.formatDecimal(answer.averagePowerGeneration,1,2)}"></span> kWh/m²/day</p>
+              <p>开窗面积<span th:text="${#numbers.formatDecimal(answer.area,1,2)}"></span>m²</p>
+            </div>
+          </div>
+        </div>
+        <div class="layui-col-md12">
+          <div class="layui-card">
+            <div class="layui-card-header">节能效果</div>
+            <div class="layui-card-body">
+              <p>节约照明用电:<span th:text="${#numbers.formatDecimal(answer.savePower,1,2)}"></span>kw/h</p>
+              <p>年预计发电量:<span th:text="${#numbers.formatDecimal(answer.expectPowerGeneration,1,2)}"></span>°</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
     </div>
         <div id="show" style="width: 1500px;height:600px;">
 
         </div>
+    </div>
     <script th:inline="javascript">
         var myChart = echarts.init(document.getElementById('show'));
         var option = {
