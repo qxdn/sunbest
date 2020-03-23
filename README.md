@@ -11,9 +11,9 @@
 在```resources```目录下创建```weather.properties```文件
 ```properties
 #预设纬度
-weather.lat=
+weather.lat=30.58
 #预设经度
-weather.lon=
+weather.lon=114.27
 #免费api
 weather.freeUrl=https://free-api.heweather.net/s6
 #付费api
