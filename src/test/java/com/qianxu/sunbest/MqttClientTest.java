@@ -34,6 +34,10 @@ public class MqttClientTest {
 
     @Test
     public void MqttServiceTest(){
-        mqttService.sendMessage("aaa","sssssf");
+        try {
+            mqttService.sendMessage("aaa","sssssf");
+        } catch (MqttException e) {
+            e.printStackTrace();
+        }
     }
 }

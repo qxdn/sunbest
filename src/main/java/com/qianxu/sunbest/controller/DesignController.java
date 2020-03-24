@@ -35,18 +35,6 @@ public class DesignController {
         return "design";
     }
 
-    @PostMapping("/BestAngle")
-    @ResponseBody
-    public String getBestAngle(Predict predict){
-        DecimalFormat df=new DecimalFormat("#0.00");
-        Double angle= modelService.getBestAngle(predict);
-        return df.format(angle);
-    }
 
 
-    @PostMapping("/api")
-    @ResponseBody
-    public Answer designApi(UserDefine userDefine){
-        return  modelService.getAnswer(userDefine);
-    }
 }

@@ -25,7 +25,7 @@ public class MqttServiceImpl implements MqttService {
     MqttSub mqttSub;
 
     @Override
-    public void sendMessage(String msg) {
+    public void sendMessage(String msg) throws MqttException {
         List<String> pubs=mqttPropConfig.getPubTopic();
         for(String pub:pubs){
             sendMessage(pub,msg);
@@ -33,8 +33,7 @@ public class MqttServiceImpl implements MqttService {
     }
 
     @Override
-    public void sendMessage(String topic, String msg) {
-        try {
+    public void sendMessage(String topic, String msg) throws MqttException {
             MqttMessage message = new MqttMessage();
             message.setQos(1);
             message.setRetained(true);
@@ -42,11 +41,6 @@ public class MqttServiceImpl implements MqttService {
             MqttTopic mqttTopic = client.getTopic(topic);
             MqttDeliveryToken token = mqttTopic.publish(message);//发布主题
             token.waitForCompletion();
-        }catch (MqttPersistenceException e) {
-           log.error(e.toString());
-        } catch (MqttException e) {
-            log.error(e.toString());
-        }
     }
 
     @Override

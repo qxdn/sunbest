@@ -18,6 +18,7 @@
     <ul class="layui-nav layui-bg-cyan">
         <li class="layui-nav-item "><a href="/">首页</a></li>
         <li class="layui-nav-item layui-this"><a href="/design/toDesign">天窗设计</a></li>
+        <li class="layui-nav-item "><a href="/windows/window">天窗控制</a></li>
     </ul>
 
 
@@ -259,7 +260,7 @@
             $("#predict").click(function () {
                 $.ajax({
                     type: "post",
-                    url: "/design/BestAngle",
+                    url: "/api/v1/BestAngle",
                     data: {
                         lon: $("#lon").val(),
                         lat: $("#lat").val(),
