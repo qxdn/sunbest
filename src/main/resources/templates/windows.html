@@ -102,6 +102,19 @@
             var form = layui.form;
             $ = layui.jquery;
 
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+            }else{
+                layer.msg("您的浏览器不支持地理位置");
+            }
+
+            function showPosition(position) {
+                $("#lat").val(position.coords.latitude);
+                $("#lon").val(position.coords.longitude);
+                //有些浏览器不支持海拔
+                $("#alt").val(position.coords.altitude);
+            }
+
             $('#lon').change(function () {
                 value = $('#lon').val();
                 if (isNaN(value) || value > 180 || value < -180) {
