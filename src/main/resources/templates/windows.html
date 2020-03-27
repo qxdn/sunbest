@@ -22,7 +22,7 @@
         </ul>
         <ul class="layui-nav layui-bg-cyan layui-layout-right">
             <li class="layui-nav-item "><a sec:authorize="!isAuthenticated()" href="/toLogin">登录</a></li>
-            <li class="layui-nav-item "><a sec:authorize="!isAuthenticated()" href="">注册</a></li>
+            <li class="layui-nav-item "><a sec:authorize="!isAuthenticated()" href="/toRegister">注册</a></li>
             <li class="layui-nav-item "><a sec:authorize="isAuthenticated()" sec:authentication="name" href=""></a></li>
             <li class="layui-nav-item "><a sec:authorize="isAuthenticated()" href="/logout">登出</a></li>
         </ul>
