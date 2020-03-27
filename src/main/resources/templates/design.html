@@ -260,9 +260,13 @@
                 layer.msg("您的浏览器不支持地理位置");
             }
 
+            function financial(x) {
+                return Number.parseFloat(x).toFixed(2);
+            }
+
             function showPosition(position) {
-                $("#lat").val(position.coords.latitude);
-                $("#lon").val(position.coords.longitude);
+                $("#lat").val(financial(position.coords.latitude));
+                $("#lon").val(financial(position.coords.longitude));
             }
 
             form.on("select(glassType)", function (data) {

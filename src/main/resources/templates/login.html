@@ -31,43 +31,45 @@
             <div class="layui-col-md4">
                 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
                     <legend style="margin-left: 120px;">登录</legend>
-                </fieldset>
-                <div class="layui-form layui-tab-content" id="LAY_ucm" style="padding: 20px 0;">
-                    <div class="layui-tab-item layui-show">
-                        <div class="layui-form layui-form-pane">
-                            <form class="layui-form" method="post" action="/login">
-                                <label layui-text class="layui-form-item" th:if="${param.error}"
-                                    th:text="${session?.SPRING_SECURITY_LAST_EXCEPTION?.message}"></label>
-                                <div class="layui-form-item">
-                                    <label class="layui-form-label">邮箱</label>
-                                    <div class="layui-input-inline">
-                                        <input type="email" name="email" lay-verify="required|email" placeholder="请输入邮箱"
-                                            lay-reqtext="请输入邮箱" class="layui-input">
+
+                    <div class="layui-form layui-tab-content" id="LAY_ucm" style="padding: 20px 0;">
+                        <div class="layui-tab-item layui-show">
+                            <div class="layui-form layui-form-pane">
+                                <form class="layui-form" method="post" action="/login">
+                                    <label layui-text class="layui-form-item" th:if="${param.error}"
+                                        th:text="${session?.SPRING_SECURITY_LAST_EXCEPTION?.message}"></label>
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">邮箱</label>
+                                        <div class="layui-input-inline">
+                                            <input type="email" name="email" lay-verify="required|email"
+                                                placeholder="请输入邮箱" lay-reqtext="请输入邮箱" class="layui-input">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="layui-form-item">
-                                    <label class="layui-form-label">密码</label>
-                                    <div class="layui-input-inline">
-                                        <input type="password" name="password" lay-verify="required|password"
-                                            placeholder="请输入密码" lay-reqtext="请输入6~12位密码" class="layui-input">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">密码</label>
+                                        <div class="layui-input-inline">
+                                            <input type="password" name="password" lay-verify="required|password"
+                                                placeholder="请输入密码" lay-reqtext="请输入6~12位密码" class="layui-input">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="layui-form-item">
-                                    <label class="layui-form-label">记住我</label>
-                                    <div class="layui-input-inline">
-                                        <input type="checkbox" name="remember" lay-skin="switch">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">记住我</label>
+                                        <div class="layui-input-inline">
+                                            <input type="checkbox" name="remember" lay-skin="switch">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="layui-form-item">
-                                    <div class="layui-input-block layui-input-inline">
-                                        <button type="submit" class="layui-btn" lay-submit=""
-                                            lay-filter="submitDesign">提交</button>
+                                    <div class="layui-form-item">
+                                        <div class="layui-input-block layui-input-inline">
+                                            <button type="submit" class="layui-btn" lay-submit=""
+                                                lay-filter="submitDesign">登录</button>
+                                            <a href="/toRegister" class="layui-btn">注册</a>
+                                        </div>
                                     </div>
-                                </div>
-                            </form>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </fieldset>
             </div>
             <div class="layui-col-md4"></div>
         </div>
