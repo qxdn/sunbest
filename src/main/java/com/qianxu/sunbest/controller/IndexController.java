@@ -9,4 +9,9 @@ public class IndexController {
     public String index(){
         return "index";
     }
+
+    @RequestMapping("/toLogin")
+    public String toLogin(){
+        return "login";
+    }
 }

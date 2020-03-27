@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <meta charset="utf-8">
@@ -15,11 +15,19 @@
 <body>
 
     <!--顶部导航改href-->
-    <ul class="layui-nav layui-bg-cyan">
-        <li class="layui-nav-item "><a href="/">首页</a></li>
-        <li class="layui-nav-item layui-this"><a href="/design/toDesign">天窗设计</a></li>
-        <li class="layui-nav-item "><a href="/windows/window">天窗控制</a></li>
-    </ul>
+    <div class="layui-header">
+        <ul class="layui-nav layui-bg-cyan">
+            <li class="layui-nav-item "><a href="/"><i class="layui-icon layui-icon-home"></i>首页</a></li>
+            <li class="layui-nav-item layui-this"><a href="/design/toDesign">天窗设计</a></li>
+            <li class="layui-nav-item "><a href="/windows/window">天窗控制</a></li>
+        </ul>
+        <ul class="layui-nav layui-bg-cyan layui-layout-right">
+            <li class="layui-nav-item "><a sec:authorize="!isAuthenticated()" href="/toLogin">登录</a></li>
+            <li class="layui-nav-item "><a sec:authorize="!isAuthenticated()" href="">注册</a></li>
+            <li class="layui-nav-item "><a sec:authorize="isAuthenticated()" sec:authentication="name" href=""></a></li>
+            <li class="layui-nav-item "><a sec:authorize="isAuthenticated()" href="/logout">登出</a></li>
+        </ul>
+    </div>
 
     <div class="layui-main">
         <!--更改action-->

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <base th:href="@{/}">
+    <title>节能屋顶</title>
+    <link rel="stylesheet" href="layui/css/layui.css">
+    <script src="layui/layui.js"></script>
+</head>
+
+<body>
+    <!--改href-->
+    <div class="layui-header">
+        <ul class="layui-nav layui-bg-cyan">
+            <li class="layui-nav-item layui-this"><a href="/"><i class="layui-icon layui-icon-home"></i>首页</a></li>
+            <li class="layui-nav-item "><a href="/design/toDesign">天窗设计</a></li>
+            <li class="layui-nav-item "><a href="/windows/window">天窗控制</a></li>
+        </ul>
+        <ul class="layui-nav layui-bg-cyan layui-layout-right">
+            <li class="layui-nav-item "><a sec:authorize="!isAuthenticated()" href="/toLogin">登录</a></li>
+            <li class="layui-nav-item "><a sec:authorize="!isAuthenticated()" href="">注册</a></li>
+            <li class="layui-nav-item "><a sec:authorize="isAuthenticated()" sec:authentication="name" href=""></a></li>
+            <li class="layui-nav-item "><a sec:authorize="isAuthenticated()" href="/logout">登出</a></li>
+        </ul>
+    </div>
+    <div class="layui-main">
+        <div class="layui-row layui-col-space10">
+            <div class="layui-col-md4"></div>
+            <div class="layui-col-md4">
+                <form class="layui-form" method="post" action="/login">
+                    <label layui-text class="layui-form-item" th:if="${param.error}"
+                        th:text="${session?.SPRING_SECURITY_LAST_EXCEPTION?.message}"></label>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">邮箱</label>
+                        <div class="layui-input-inline">
+                            <input type="email" name="email" lay-verify="required|email" placeholder="请输入邮箱"
+                                lay-reqtext="请输入邮箱" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">密码</label>
+                        <div class="layui-input-inline">
+                            <input type="password" name="password" lay-verify="required|password" placeholder="请输入密码"
+                                lay-reqtext="请输入6~12位密码" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-input-block layui-input-inline">
+                            <button type="submit" class="layui-btn" lay-submit="" lay-filter="submitDesign">提交</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="layui-col-md4"></div>
+        </div>
+    </div>
+
+    <script th:inline="javascript">
+        layui.use(['form'], function () {
+            var form = layui.form;
+            //自定义验证规则
+            if ([[${ param.error }]]) {
+                layer.msg("用户名或者密码错误")
+            }
+            form.verify({
+                password: function (value) {
+                    if (value.length < 6 || value.length > 12) {
+                        return "密码长度在6~12位";
+                    }
+                }
+            });
+        })
+    </script>
+
+</body>
+
+</html>
