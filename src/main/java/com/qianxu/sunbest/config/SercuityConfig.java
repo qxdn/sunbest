@@ -50,6 +50,8 @@ public class SercuityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf().disable();
         
+        //记住我功能 默认两周
+        http.rememberMe().rememberMeParameter("remember");
         //登出功能
         http.logout().logoutSuccessUrl("/");
     }
