@@ -16,8 +16,9 @@ public class WeatherTest {
 
     @Autowired
     WeatherService weatherService;
+
     @Test
-    public void WeatherTest(){
+    public void MyWeatherTest(){
         System.out.println(weatherConfig);
     }
 

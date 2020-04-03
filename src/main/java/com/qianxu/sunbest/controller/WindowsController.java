@@ -12,6 +12,7 @@ public class WindowsController {
 
     @RequestMapping("/window")
     public String windows(){
+        log.debug("GOTO windows.html");
         return "windows";
     }
 }

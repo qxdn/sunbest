@@ -6,13 +6,12 @@ import com.qianxu.sunbest.dao.SFCDao;
 import com.qianxu.sunbest.model.DIFF;
 import com.qianxu.sunbest.model.DNR;
 import com.qianxu.sunbest.model.SFC;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.List;
+
 
 @SpringBootTest
 public class DaoTest {

@@ -17,6 +17,10 @@ import java.util.List;
 @ToString
 public class User  implements UserDetails {
 
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1193213579463639990L;
     private Integer id;
     private String email;
     private String password;
