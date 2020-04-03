@@ -115,18 +115,20 @@
             } else {
                 layer.msg("您的浏览器不支持地理位置");
             }
-
-            
             function financial(x) {
                 return Number.parseFloat(x).toFixed(2);
             }
-
 
             function showPosition(position) {
                 $("#lat").val(financial(position.coords.latitude));
                 $("#lon").val(financial(position.coords.longitude));
                 //有些浏览器不支持海拔
-                $("#alt").val(financial(position.coords.altitude));
+                if (null == position.coords.altitude) {
+                    $("#alt").val(10)
+                    layer.msg("您的浏览器不支持获取海拔")
+                } else {
+                    $("#alt").val(financial(position.coords.altitude));
+                }
             }
 
             $('#lon').change(function () {
@@ -148,6 +150,53 @@
                     $('#alt').val("");
                 }
             });
+
+            //5s一次获取天气
+            setInterval(function () {
+                function getWeather(lon, lat) {
+                    $.ajax({
+                        type: "post",
+
+                        url: "/api/v1/Weather",
+                        data: {
+                            lat: lat,
+                            lon: lon,
+                        },
+                        dataType: "json",
+                        success: function (data) {
+                            $('#pm10').val(data.pm10);
+                            $('#pm25').val(data.pm25);
+                            $('#pcpn').val(data.pcpn);
+                        },
+                    })
+                }
+                function getSun(lon, lat, alt) {
+                    $.ajax({
+                        type: "post",
+
+                        url: "/api/v1/Solar",
+                        data: {
+                            lat: lat,
+                            lon: lon,
+                            alt: alt,
+                        },
+                        dataType: "json",
+                        success: function (data) {
+                            $('#solarAngle').val(data.solar_elevation_angle);
+                        },
+                    });
+                }
+
+                lon = $('#lon').val();
+                lat = $('#lat').val();
+                alt = $('#alt').val();
+                if (lon == "" || lat == "" || alt == "") {
+                    return;
+                }
+                getWeather(lon, lat);
+                getSun(lon, lat, alt);
+            }, 5000)
+
 
             $('#angle').change(function () {
                 value = $('#angle').val();
