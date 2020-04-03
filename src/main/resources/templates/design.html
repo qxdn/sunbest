@@ -9,11 +9,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>节能屋顶设计</title>
     <link rel="stylesheet" href="layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="step-lay/step.css" media="all">
     <script src="layui/layui.js" charset="utf-8"></script>
+    <script src="step-lay/step.js"></script>
 </head>
 
 <body>
-
     <!--顶部导航改href-->
     <div class="layui-header">
         <ul class="layui-nav layui-bg-cyan">
@@ -24,223 +25,330 @@
         <ul class="layui-nav layui-bg-cyan layui-layout-right">
             <li class="layui-nav-item "><a sec:authorize="!isAuthenticated()" href="/toLogin">登录</a></li>
             <li class="layui-nav-item "><a sec:authorize="!isAuthenticated()" href="/toRegister">注册</a></li>
+            <!--改href-->>
             <li class="layui-nav-item "><a sec:authorize="isAuthenticated()" sec:authentication="name" href=""></a></li>
             <li class="layui-nav-item "><a sec:authorize="isAuthenticated()" href="/logout">登出</a></li>
         </ul>
     </div>
 
     <div class="layui-main">
-        <!--更改action-->
-        <form class="layui-form" method="post" action="/design/handle">
-            <!--经纬度-->
-            <div class="layui-form-item">
-                <div class="layui-inline">
-                    <label class="layui-form-label">经度</label>
-                    <div class="layui-input-block">
-                        <input type="text" id="lon" name="lon" lay-verify="required|number|lon" lay-reqtext="经度不能为空"
-                            placeholder="请输入" value="0" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">纬度</label>
-                    <div class="layui-input-block">
-                        <input type="text" id="lat" name="lat" lay-verify="required|number|lat" lay-reqtext="纬度不能为空"
-                            placeholder="请输入" value="0" class="layui-input">
+        <!--分步设计-->
+        <div class="layui-fluid">
+            <div class="layui-card">
+                <div class="layui-card-body" style="padding-top: 40px;">
+                    <div class="layui-carousel" id="stepForm" lay-filter="stepForm" style="margin: 0 auto;">
+                        <!--分页器 按照div判断-->
+                        <div carousel-item>
+                            <!--位置-->
+                            <div>
+                                <form class="layui-form" style="margin: 0 auto;max-width: 460px;padding-top: 40px;">
+                                    <!--经纬度-->
+                                    <div class="layui-form-item">
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">经度</label>
+                                            <div class="layui-input-block">
+                                                <input id="b_lon" type="text" lay-verify="required|number|lon"
+                                                    lay-reqtext="经度不能为空" placeholder="请输入" value="0"
+                                                    class="layui-input">
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">纬度</label>
+                                            <div class="layui-input-block">
+                                                <input id="b_lat" type="text" lay-verify="required|number|lat"
+                                                    lay-reqtext="纬度不能为空" placeholder="请输入" value="0"
+                                                    class="layui-input">
+                                            </div>
+                                        </div>
+                                        <div class="layui-form-item">
+                                            <div class="layui-input-block">
+                                                <!--注意filter-->
+                                                <button class="layui-btn" lay-submit lay-filter="formStep">
+                                                    &emsp;下一步&emsp;
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <!--角度-->
+                            <div>
+                                <form class="layui-form" style="margin: 0 auto;max-width: 460px;padding-top: 40px;">
+                                    <div class="layui-form-item">
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">方位角</label>
+                                            <div class="layui-input-block">
+                                                <input type="text" id="b_azimuth" lay-verify="required|number|azimuth"
+                                                    lay-reqtext="方位角不能为空" placeholder="请输入" value="0"
+                                                    class="layui-input">
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <button type="button" class="layui-btn" id="predict">预测倾角</button>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">自定义倾角</label>
+                                            <div class="layui-input-block">
+                                                <input type="text" id="b_userAngle"
+                                                    lay-verify="required|number|userAngle" value="0"
+                                                    lay-reqtext="用户不能为空" placeholder="请输入" autocomplete="off"
+                                                    class="layui-input">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <div class="layui-input-block">
+                                            <button type="button" class="layui-btn layui-btn-primary pre">上一步</button>
+                                            <button class="layui-btn" lay-submit lay-filter="formStep2">
+                                                &emsp;下一步&emsp;
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <!--建筑光伏-->
+                            <div>
+                                <form class="layui-form" style="margin: 0 auto;max-width: 460px;padding-top: 40px;">
+                                    <div class="layui-form-item">
+                                        <!--光伏-->
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">光伏类型</label>
+                                            <div class="layui-input-block">
+                                                <select id="b_photovoltaicPanelType">
+                                                    <option value="0">单晶硅太阳能板</option>
+                                                    <option value="1">化合物太阳能板</option>
+                                                    <option value="2">多晶硅太阳能板</option>
+                                                    <option value="3">非晶硅太阳能板</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <!--建筑-->
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">房屋类型</label>
+                                            <div class="layui-input-block">
+                                                <select id="b_houseType">
+                                                    <option value="0">传统房屋</option>
+                                                    <option value="1">传统平房</option>
+                                                    <option value="2">采光房</option>
+                                                    <option value="3">大型建筑</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">建筑类型</label>
+                                            <div class="layui-input-block">
+                                                <select id="b_buildingType">
+                                                    <option value="0">办公</option>
+                                                    <option value="1">学校</option>
+                                                    <output value="2">旅馆</output>
+                                                    <option value="3">医院</option>
+                                                    <option value="4">展览</option>
+                                                    <option value="5">交通</option>
+                                                    <option value="6">体育</option>
+                                                    <option value="7">工业</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <div class="layui-input-block">
+                                            <button type="button" class="layui-btn layui-btn-primary pre">上一步</button>
+                                            <button class="layui-btn" lay-submit lay-filter="formStep3">
+                                                &emsp;下一步&emsp;
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <!--玻璃与窗户-->
+                            <div>
+                                <form class="layui-form" style="margin: 0 auto;max-width: 460px;padding-top: 40px;">
+                                    <!--玻璃 -->
+                                    <div class="layui-form-item">
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">玻璃规格</label>
+                                            <div class="layui-input-block">
+                                                <select id="b_glassType" lay-filter="b_glassType">
+                                                    <option value="0">单层玻璃</option>
+                                                    <option value="1">夹层玻璃</option>
+                                                    <option value="2">中空玻璃</option>
+                                                    <option value="3">镀膜玻璃</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">玻璃类型</label>
+                                            <div class="layui-input-block">
+                                                <select id="b_glassSpecifications" lay-filter='b_glassSpecifications'>
+                                                    <option value="0">普通白玻</option>
+                                                    <option value="1">超白玻璃</option>
+                                                    <option value="2">浅蓝玻璃</option>
+                                                    <option value="3">水晶灰玻</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <!--窗户-->
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">窗框种类</label>
+                                            <div class="layui-input-block">
+                                                <select id="b_windowsType">
+                                                    <option value='0'>单层</option>
+                                                    <option value="1">双层</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">窗框材料</label>
+                                            <div class="layui-input-block">
+                                                <select id="b_windowsMaterial">
+                                                    <option value="0">木窗</option>
+                                                    <option value="1">铝窗</option>
+                                                    <output value="2">钢窗</output>
+                                                    <option value="3">塑料窗</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <div class="layui-input-block">
+                                            <button type="button" class="layui-btn layui-btn-primary pre">上一步</button>
+                                            <button class="layui-btn" lay-submit lay-filter="formStep4">
+                                                &emsp;下一步&emsp;
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <!--房屋-->
+                            <div>
+                                <form class="layui-form" style="margin: 0 auto;max-width: 460px;padding-top: 40px;">
+                                    <!--房屋-->
+                                    <div class="layui-form-item">
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">房屋长度</label>
+                                            <div class="layui-input-block">
+                                                <input type="text" id="b_houseLength"
+                                                    lay-verify="required|number|houseLength" lay-reqtext="房屋长度不能为空"
+                                                    placeholder="请输入" autocomplete="off" class="layui-input">
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">房屋高度</label>
+                                            <div class="layui-input-block">
+                                                <input type="text" id="b_houseHigh"
+                                                    lay-verify="required|number|houseHigh" lay-reqtext="房屋高度不能为空"
+                                                    placeholder="请输入" autocomplete="off" class="layui-input">
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">房屋宽度</label>
+                                            <div class="layui-input-block">
+                                                <input type="text" id="b_houseWidth"
+                                                    lay-verify="required|number|houseWidth" lay-reqtext="房屋宽度不能为空"
+                                                    placeholder="请输入" autocomplete="off" class="layui-input">
+                                            </div>
+                                        </div>
+                                        <!--反射-->
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">棚顶反射比</label>
+                                            <div class="layui-input-block">
+                                                <select id="b_shedReflect">
+                                                    <option value='0'>0.8</option>
+                                                    <option value="1">0.5</option>
+                                                    <option value="2">0.2</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">墙面反射比</label>
+                                            <div class="layui-input-block">
+                                                <select id="b_wallReflect">
+                                                    <option value="0">0.5</option>
+                                                    <option value="1">0.3</option>
+                                                    <output value="2">0.1</output>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <div class="layui-input-block">
+                                            <button type="button" class="layui-btn layui-btn-primary pre">上一步</button>
+                                            <button class="layui-btn" lay-submit lay-filter="formStep5">
+                                                &emsp;下一步&emsp;
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <!--地区-->
+                            <div>
+                                <form class="layui-form" style="margin: 0 auto;max-width: 460px;padding-top: 40px;">
+                                    <!--地区-->
+                                    <div class="layui-form-item">
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">光气候区</label>
+                                            <div class="layui-input-block">
+                                                <select id="b_lightClimate">
+                                                    <option value="0">Ⅰ区</option>
+                                                    <option value="1">Ⅱ区</option>
+                                                    <option value="2">Ⅲ区</option>
+                                                    <option value="3">Ⅳ区</option>
+                                                    <option value="4">Ⅴ区</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">采光等级</label>
+                                            <div class="layui-input-block">
+                                                <select id="b_lightLevel">
+                                                    <option value="0">Ⅰ型</option>
+                                                    <option value="1">Ⅱ型</option>
+                                                    <option value="2">Ⅲ型</option>
+                                                    <option value="3">Ⅳ型</option>
+                                                    <option value="4">Ⅴ型</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <div class="layui-input-block">
+                                            <button type="button" class="layui-btn layui-btn-primary pre">上一步</button>
+                                            <button class="layui-btn" lay-submit lay-filter="formStep6">
+                                                &emsp;提交&emsp;
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <!--方位角-->
-            <div class="layui-form-item">
-                <div class="layui-inline">
-                    <label class="layui-form-label">方位角</label>
-                    <div class="layui-input-block">
-                        <input type="text" id="azimuth" name="azimuth" lay-verify="required|number|azimuth"
-                            lay-reqtext="方位角不能为空" placeholder="请输入" value="0" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">自定义倾角</label>
-                    <div class="layui-input-block">
-                        <input type="text" id="userAngle" name="userAngle" lay-verify="required|number|userAngle"
-                            value="0" lay-reqtext="用户不能为空" placeholder="请输入" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-inline">
-                    <button type="button" class="layui-btn" id="predict">预测倾角</button>
-                </div>
-            </div>
-
-            <!--光伏-->
-            <div class="layui-form-item">
-                <div class="layui-inline">
-                    <label class="layui-form-label">光伏类型</label>
-                    <div class="layui-input-block">
-                        <select name="photovoltaicPanelType">
-                            <option value="0">单晶硅太阳能板</option>
-                            <option value="1">化合物太阳能板</option>
-                            <option value="2">多晶硅太阳能板</option>
-                            <option value="3">非晶硅太阳能板</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <!--建筑-->
-            <div class="layui-form-item">
-                <div class="layui-inline">
-                    <label class="layui-form-label">房屋类型</label>
-                    <div class="layui-input-block">
-                        <select name="houseType">
-                            <option value="0">传统房屋</option>
-                            <option value="1">传统平房</option>
-                            <option value="2">采光房</option>
-                            <option value="3">大型建筑</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">建筑类型</label>
-                    <div class="layui-input-block">
-                        <select name="buildingType">
-                            <option value="0">办公</option>
-                            <option value="1">学校</option>
-                            <output value="2">旅馆</output>
-                            <option value="3">医院</option>
-                            <option value="4">展览</option>
-                            <option value="5">交通</option>
-                            <option value="6">体育</option>
-                            <option value="7">工业</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <!--玻璃 -->
-            <div class="layui-form-item">
-                <div class="layui-inline">
-                    <label class="layui-form-label">玻璃规格</label>
-                    <div class="layui-input-block">
-                        <select name="glassType" lay-filter="glassType">
-                            <option value="0">单层玻璃</option>
-                            <option value="1">夹层玻璃</option>
-                            <option value="2">中空玻璃</option>
-                            <option value="3">镀膜玻璃</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">玻璃类型</label>
-                    <div class="layui-input-block">
-                        <select name="glassSpecifications" lay-filter='glassSpecifications'>
-                            <option value="0">普通白玻</option>
-                            <option value="1">超白玻璃</option>
-                            <option value="2">浅蓝玻璃</option>
-                            <option value="3">水晶灰玻</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <!--窗户-->
-            <div class="layui-form-item">
-                <div class="layui-inline">
-                    <label class="layui-form-label">窗框种类</label>
-                    <div class="layui-input-block">
-                        <select name="windowsType">
-                            <option value='0'>单层</option>
-                            <option value="1">双层</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">窗框材料</label>
-                    <div class="layui-input-block">
-                        <select name="windowsMaterial">
-                            <option value="0">木窗</option>
-                            <option value="1">铝窗</option>
-                            <output value="2">钢窗</output>
-                            <option value="3">塑料窗</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <!--房屋-->
-            <div class="layui-form-item">
-                <div class="layui-inline">
-                    <label class="layui-form-label">房屋长度</label>
-                    <div class="layui-input-block">
-                        <input type="text" id="houseLength" name="houseLength" lay-verify="required|number|houseLength"
-                            lay-reqtext="房屋长度不能为空" placeholder="请输入" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">房屋高度</label>
-                    <div class="layui-input-block">
-                        <input type="text" id="houseHigh" name="houseHigh" lay-verify="required|number|houseHigh"
-                            lay-reqtext="房屋高度不能为空" placeholder="请输入" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">房屋宽度</label>
-                    <div class="layui-input-block">
-                        <input type="text" id="houseWidth" name="houseWidth" lay-verify="required|number|houseWidth"
-                            lay-reqtext="房屋宽度不能为空" placeholder="请输入" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-            </div>
-            <!--反射-->
-            <div class="layui-form-item">
-                <div class="layui-inline">
-                    <label class="layui-form-label">棚顶反射比</label>
-                    <div class="layui-input-block">
-                        <select name="shedReflect">
-                            <option value='0'>0.8</option>
-                            <option value="1">0.5</option>
-                            <option value="2">0.2</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">墙面反射比</label>
-                    <div class="layui-input-block">
-                        <select name="wallReflect">
-                            <option value="0">0.5</option>
-                            <option value="1">0.3</option>
-                            <output value="2">0.1</output>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <!--地区-->
-            <div class="layui-form-item">
-                <div class="layui-inline">
-                    <label class="layui-form-label">光气候区</label>
-                    <div class="layui-input-block">
-                        <select name="lightClimate">
-                            <option value="0">Ⅰ区</option>
-                            <option value="1">Ⅱ区</option>
-                            <option value="2">Ⅲ区</option>
-                            <option value="3">Ⅳ区</option>
-                            <option value="4">Ⅴ区</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">采光等级</label>
-                    <div class="layui-input-block">
-                        <select name="lightLevel">
-                            <option value="0">Ⅰ型</option>
-                            <option value="1">Ⅱ型</option>
-                            <option value="2">Ⅲ型</option>
-                            <option value="3">Ⅳ型</option>
-                            <option value="4">Ⅴ型</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <div class="layui-input-block">
-                    <button type="submit" class="layui-btn" lay-submit="" lay-filter="submitDesign">提交</button>
-                </div>
-            </div>
-        </form>
+        </div>
+        <!--隐藏表单-->
+        <div hidden>
+            <!--更改action-->
+            <form id="hiddenForm" method="post" action="/design/handle">
+                <input id="lon" name="lon" />
+                <input id="lat" name="lat" />
+                <input id="azimuth" name="azimuth" />
+                <input id="userAngle" name="userAngle" />
+                <input id="photovoltaicPanelType" name="photovoltaicPanelType" />
+                <input id="houseType" name="houseType" />
+                <input id="buildingType" name="buildingType">
+                <input id="glassType" name="glassType" />
+                <input id="glassSpecifications" name="glassSpecifications" />
+                <input id="windowsType" name="windowsType" />
+                <input id="windowsMaterial" name="windowsMaterial" />
+                <input id="houseLength" name="houseLength" />
+                <input id="houseHigh" name="houseHigh" />
+                <input id="houseWidth" name="houseWidth" />
+                <input id="shedReflect" name="shedReflect" />
+                <input id="wallReflect" name="wallReflect" />
+                <input id="lightClimate" name="lightClimate" />
+                <input id="lightLevel" name="lightLevel" />
+            </form>
+        </div>
     </div>
     <script>
         var glassTy = [
@@ -249,45 +357,79 @@
             ["高透Low-E1", "高透Low-E2", "遮阳灰", "遮阳浅蓝灰", "双银Low-E"],
             ["热反射镀膜玻璃", "硬镀膜纸辐射玻璃3", "硬镀膜纸辐射玻璃4", "硬镀膜纸辐射玻璃5", "硬镀膜纸辐射玻璃6", "硬镀膜纸辐射玻璃8", "硬镀膜纸辐射玻璃10", "硬镀膜纸辐射玻璃12", "硬镀膜纸辐射玻璃6(金)", "硬镀膜纸辐射玻璃8(金)"]
         ];
-
-        layui.use(['form'], function () {
+        layui.config({
+            base: 'step-lay/'
+        }).use(['form', 'step'], function () {
             var form = layui.form;
             $ = layui.jquery;
+            step = layui.step;
 
+            //渲染分步
+            step.render({
+                elem: '#stepForm',
+                filter: 'stepForm',
+                width: '100%', //设置容器宽度
+                stepWidth: '750px',
+                height: '500px',
+                stepItems: [{
+                    title: '位置'
+                }, {
+                    title: '方位角'
+                }, {
+                    title: '光伏与建筑'
+                }, {
+                    title: '玻璃与窗户'
+                }, {
+                    title: '房屋'
+                }, {
+                    title: '地区'
+                }]
+            });
+
+            //地理位置
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(showPosition);
             } else {
                 layer.msg("您的浏览器不支持地理位置");
             }
-
             function financial(x) {
                 return Number.parseFloat(x).toFixed(2);
             }
-
             function showPosition(position) {
-                $("#lat").val(financial(position.coords.latitude));
-                $("#lon").val(financial(position.coords.longitude));
+                console.log(position)
+                $("#b_lat").val(financial(position.coords.latitude));
+                $("#b_lon").val(financial(position.coords.longitude));
             }
 
-            form.on("select(glassType)", function (data) {
+            //级联表单
+            form.on("select(b_glassType)", function (data) {
                 var index = data.elem.value;
                 var type = glassTy[index];
-                $("select[name='glassSpecifications']").empty();
+                $("#b_glassSpecifications").empty();
                 for (var i = 0; i < type.length; i++) {
                     var option = getOption(i, type[i]);
-                    $("select[name='glassSpecifications']").append(option);
+                    $("#b_glassSpecifications").append(option);
                 }
                 form.render('select');
             })
+            function getOption(value, text) {
+                var option = "<option value='" + value + "'>" + text + "</option>";
+                return option;
+            }
 
+            //预测倾角
             $("#predict").click(function () {
+
+                lonData = $("#lon").val();
+                latData = $("#lat").val();
+                azimuthData = $("#b_azimuth").val();
                 $.ajax({
                     type: "post",
                     url: "/api/v1/BestAngle",
                     data: {
-                        lon: $("#lon").val(),
-                        lat: $("#lat").val(),
-                        azimuth: $("#azimuth").val(),
+                        lon: lonData,
+                        lat: latData,
+                        azimuth: azimuthData,
                     },
                     dataType: "json",
                     success: function (data) {
@@ -331,12 +473,69 @@
                     }
                 }
             });
+
+            //分步实现
+            //表1
+            form.on('submit(formStep)', function (data) {
+                $('#lon').val($('#b_lon').val())
+                $('#lat').val($('#b_lat').val())
+                step.next('#stepForm');
+                return false;
+            });
+            //表2
+            form.on('submit(formStep2)', function (data) {
+                $('#azimuth').val($('#b_azimuth').val())
+                $('#userAngle').val($('#b_userAngle').val())
+                step.next('#stepForm');
+                return false;
+            });
+            //表3
+            form.on('submit(formStep3)', function (data) {
+                $('#photovoltaicPanelType').val($('#b_photovoltaicPanelType').val())
+                $('#houseType').val($('#b_houseType').val())
+                $('#buildingType').val($('#b_buildingType').val())
+                step.next('#stepForm');
+                return false;
+            });
+            //表4
+            form.on('submit(formStep4)', function (data) {
+                $('#glassType').val($('#b_glassType').val())
+                $('#glassSpecifications').val($('#b_glassSpecifications').val())
+                $('#windowsType').val($('#b_windowsType').val())
+                $('#windowsMaterial').val($('#b_windowsMaterial').val())
+                step.next('#stepForm');
+                return false;
+            });
+            //表5
+            form.on('submit(formStep5)', function (data) {
+                $('#houseLength').val($('#b_houseLength').val())
+                $('#houseHigh').val($('#b_houseHigh').val())
+                $('#houseWidth').val($('#b_houseWidth').val())
+                $('#shedReflect').val($('#b_shedReflect').val())
+                $('#wallReflect').val($('#b_wallReflect').val())
+                step.next('#stepForm');
+                return false;
+            });
+            //表6
+            form.on('submit(formStep6)', function (data) {
+                $('#lightClimate').val($('#b_lightClimate').val())
+                $('#lightLevel').val($('#b_lightLevel').val())
+                //提交表单
+                $("#hiddenForm").submit()
+                return false;
+            });
+
+
+            $('.pre').click(function () {
+                step.pre('#stepForm');
+            });
+
+            $('.next').click(function () {
+                step.next('#stepForm');
+            });
         });
 
-        function getOption(value, text) {
-            var option = "<option value='" + value + "'>" + text + "</option>";
-            return option;
-        }
+
     </script>
 </body>
 
