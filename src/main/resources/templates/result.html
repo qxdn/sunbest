@@ -21,7 +21,6 @@
     <ul class="layui-nav layui-bg-cyan">
       <li class="layui-nav-item "><a href="/"><i class="layui-icon layui-icon-home"></i>首页</a></li>
       <li class="layui-nav-item "><a href="/design/toDesign">天窗设计</a></li>
-      <li class="layui-nav-item "><a href="/windows/window">天窗控制</a></li>
       <li class="layui-nav-item layui-this"><a href="">节能效果</a></li>
     </ul>
     <ul class="layui-nav layui-bg-cyan layui-layout-right">
@@ -31,45 +30,64 @@
       <li class="layui-nav-item "><a sec:authorize="isAuthenticated()" href="/logout">登出</a></li>
     </ul>
   </div>
-  <div layui-main>
-    <div style="padding: 20px; background-color: #F2F2F2;">
-      <div class="layui-row layui-col-space15">
-        <div class="layui-col-md6">
-          <div class="layui-card">
-            <div class="layui-card-header">输入数据</div>
-            <div class="layui-card-body">
-              <p>经度:<span th:text="${answer.lon}"></span>°</p>
-              <p>纬度:<span th:text="${answer.lat}"></span>°</p>
-              <p>设定角度:<span th:text="${answer.userAngle}"></span>°</p>
+  <div class="layui-tab">
+    <ul class="layui-tab-title">
+      <li class="layui-this">倾角分析</li>
+      <li>天窗分布</li>
+      <li>整体性分析</li>
+    </ul>
+    <div class="layui-tab-content">
+      <!--倾角-->
+      <div class="layui-tab-item layui-show">
+        <div layui-main>
+          <div style="padding: 20px; background-color: #F2F2F2;">
+            <div class="layui-row layui-col-space15">
+              <div class="layui-col-md6">
+                <div class="layui-card">
+                  <div class="layui-card-header">输入数据</div>
+                  <div class="layui-card-body">
+                    <p>经度:<span th:text="${answer.lon}"></span>°</p>
+                    <p>纬度:<span th:text="${answer.lat}"></span>°</p>
+                    <p>设定角度:<span th:text="${answer.userAngle}"></span>°</p>
+                  </div>
+                </div>
+              </div>
+              <div class="layui-col-md6">
+                <div class="layui-card">
+                  <div class="layui-card-header">计算结果</div>
+                  <div class="layui-card-body">
+                    <p>最佳倾角:<span th:text="${#numbers.formatDecimal(answer.bestAngle,1,2)}"></span>°</p>
+                      <p>年平均发电量:<span th:text="${#numbers.formatDecimal(answer.averagePowerGeneration,1,2)}"></span> kWh/m²/day</p>
+                      <p>开窗面积:<span th:text="${#numbers.formatDecimal(answer.area,1,2)}"></span>m²</p>
+                      </div>
+                    </div>
+                  </div>
+                <div class="layui-col-md12">
+                  <div class="layui-card">
+                    <div class="layui-card-header">节能效果</div>
+                    <div class="layui-card-body">
+                      <p>节约照明用电:<span th:text="${#numbers.formatDecimal(answer.savePower,1,2)}"></span>kw/h</p>
+                      <p>年预计发电量:<span th:text="${#numbers.formatDecimal(answer.expectPowerGeneration,1,2)}"></span>°</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="layui-col-md6">
-          <div class="layui-card">
-            <div class="layui-card-header">计算结果</div>
-            <div class="layui-card-body">
-              <p>最佳倾角:<span th:text="${#numbers.formatDecimal(answer.bestAngle,1,2)}"></span>°</p>
-              <p>年平均发电量:<span th:text="${#numbers.formatDecimal(answer.averagePowerGeneration,1,2)}"></span> kWh/m²/day</p>
-              <p>开窗面积:<span th:text="${#numbers.formatDecimal(answer.area,1,2)}"></span>m²</p>
-            </div>
-          </div>
-        </div>
-        <div class="layui-col-md12">
-          <div class="layui-card">
-            <div class="layui-card-header">节能效果</div>
-            <div class="layui-card-body">
-              <p>节约照明用电:<span th:text="${#numbers.formatDecimal(answer.savePower,1,2)}"></span>kw/h</p>
-              <p>年预计发电量:<span th:text="${#numbers.formatDecimal(answer.expectPowerGeneration,1,2)}"></span>°</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      </div>
-    </div>
-        <div id="show" style="width: 1500px;height:600px;">
+          <div id="show" style="width: 1500px;height:600px;">
 
-        </div>
+          </div>
+      </div>
+      <!--天窗-->
+      <div class="layui-tab-item">
+        safsaf
+      </div>
+      <!--整体-->
+      <div class="layui-tab-item">
+          ds sd
+      </div>
     </div>
+  </div>
     <script th:inline="javascript">
       var myChart = echarts.init(document.getElementById('show'));
       var option = {
@@ -123,6 +141,14 @@
         }
       };
       myChart.setOption(option);
+    </script>
+    <script>
+      //注意：选项卡 依赖 element 模块，否则无法进行功能性操作
+      layui.use('element', function () {
+        var element = layui.element;
+
+        //…
+      });
     </script>
 </body>
 

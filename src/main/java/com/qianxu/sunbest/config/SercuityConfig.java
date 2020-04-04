@@ -54,6 +54,8 @@ public class SercuityConfig extends WebSecurityConfigurerAdapter {
         http.rememberMe().rememberMeParameter("remember");
         //登出功能
         http.logout().logoutSuccessUrl("/");
+        //允许iframe
+        http.headers().frameOptions().disable();
     }
 
     /**
