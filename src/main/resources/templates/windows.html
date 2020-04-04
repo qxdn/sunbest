@@ -28,83 +28,81 @@
         </ul>
     </div>
 
-    <div class="layui-main">
-        <form class="layui-form" action="">
-            <!--经纬度-->
-            <div class="layui-form-item">
-                <div class="layui-inline">
-                    <label class="layui-form-label">经度</label>
-                    <div class="layui-input-block">
-                        <input type="text" id="lon" name="lon" lay-verify="required|number" lay-reqtext="经度不能为空"
-                            value="114" placeholder="请输入" class="layui-input">
+    <div>
+        <div class="layui-main">
+            <form class="layui-form" action="">
+                <!--经纬度-->
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">经度</label>
+                        <div class="layui-input-block">
+                            <input type="text" id="lon" name="lon" lay-verify="required|number" lay-reqtext="经度不能为空"
+                                value="114" placeholder="请输入" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">纬度</label>
+                        <div class="layui-input-block">
+                            <input type="text" id="lat" name="lat" lay-verify="required|number" lay-reqtext="纬度不能为空"
+                                value="30" placeholder="请输入" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">海拔</label>
+                        <div class="layui-input-block">
+                            <input type="number" id="alt" name="alt" lay-verify="required|number" lay-reqtext="海拔不能为空"
+                                value="10" placeholder="请输入" class="layui-input">
+                        </div>
                     </div>
                 </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">纬度</label>
-                    <div class="layui-input-block">
-                        <input type="text" id="lat" name="lat" lay-verify="required|number" lay-reqtext="纬度不能为空"
-                            value="30" placeholder="请输入" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">海拔</label>
-                    <div class="layui-input-block">
-                        <input type="number" id="alt" name="alt" lay-verify="required|number" lay-reqtext="海拔不能为空"
-                            value="10" placeholder="请输入" class="layui-input">
-                    </div>
-                </div>
-                <!--天气获取按钮-->
-                <div class="layui-inline">
-                    <button type="button" class="layui-btn" id="getWeather">查询天气</button>
-                </div>
-            </div>
 
-            <div class="layui-form-item">
-                <div class="layui-inline">
-                    <label class="layui-form-label">PM10:</label>
-                    <div class="layui-input-block">
-                        <input type="text" id="pm10" disabled="" value="0" class="layui-input">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">PM10:</label>
+                        <div class="layui-input-block">
+                            <input type="text" id="pm10" disabled="" value="0" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">PM2.5:</label>
+                        <div class="layui-input-block">
+                            <input type="text" id="pm25" disabled="" value="0" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">降雨量:</label>
+                        <div class="layui-input-block">
+                            <input type="text" id="pcpn" disabled="" value="0" class="layui-input">
+                        </div>
                     </div>
                 </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">PM2.5:</label>
-                    <div class="layui-input-block">
-                        <input type="text" id="pm25" disabled="" value="0" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">降雨量:</label>
-                    <div class="layui-input-block">
-                        <input type="text" id="pcpn" disabled="" value="0" class="layui-input">
-                    </div>
-                </div>
-            </div>
 
-            <div class="layui-form-item">
-                <div class="layui-inline">
-                    <label class="layui-form-label">太阳高度角:</label>
-                    <div class="layui-input-block">
-                        <input type="text" id="solarAngle" disabled="" value="0" class="layui-input">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">太阳高度角:</label>
+                        <div class="layui-input-block">
+                            <input type="text" id="solarAngle" disabled="" value="0" class="layui-input">
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="layui-form-item">
-                <div class="layui-inline">
-                    <label class="layui-form-label">天窗角度</label>
-                    <div class="layui-input-block">
-                        <input type="text" id="angle" name="angle" lay-verify="required|number" lay-reqtext="角度不能为空"
-                            placeholder="请输入" autocomplete="off" class="layui-input">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">天窗角度</label>
+                        <div class="layui-input-block">
+                            <input type="text" id="angle" name="angle" lay-verify="required|number" lay-reqtext="角度不能为空"
+                                placeholder="请输入" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <!--角度控制按钮-->
+                    <div class="layui-inline">
+                        <button type="button" class="layui-btn" id="pubAngle">发送</button>
                     </div>
                 </div>
-                <!--角度控制按钮-->
-                <div class="layui-inline">
-                    <button type="button" class="layui-btn" id="pubAngle">发送</button>
-                </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
-
+    
     <script>
         layui.use(['form'], function () {
             var form = layui.form;
