@@ -20,7 +20,6 @@
         <ul class="layui-nav layui-bg-cyan">
             <li class="layui-nav-item "><a href="/"><i class="layui-icon layui-icon-home"></i>首页</a></li>
             <li class="layui-nav-item layui-this"><a href="/design/toDesign">天窗设计</a></li>
-            <li class="layui-nav-item "><a href="/windows/window">天窗控制</a></li>
         </ul>
         <ul class="layui-nav layui-bg-cyan layui-layout-right">
             <li class="layui-nav-item "><a sec:authorize="!isAuthenticated()" href="/toLogin">登录</a></li>
@@ -39,7 +38,7 @@
                     <div class="layui-carousel" id="stepForm" lay-filter="stepForm" style="margin: 0 auto;">
                         <!--分页器 按照div判断-->
                         <div carousel-item>
-                            <!--位置-->
+                            <!--位置信息-->
                             <div>
                                 <form class="layui-form" style="margin: 0 auto;max-width: 460px;padding-top: 40px;">
                                     <!--经纬度-->
@@ -71,7 +70,7 @@
                                     </div>
                                 </form>
                             </div>
-                            <!--角度-->
+                            <!--方位信息-->
                             <div>
                                 <form class="layui-form" style="margin: 0 auto;max-width: 460px;padding-top: 40px;">
                                     <div class="layui-form-item">
@@ -106,7 +105,7 @@
                                     </div>
                                 </form>
                             </div>
-                            <!--建筑光伏-->
+                            <!--光伏与建筑-->
                             <div>
                                 <form class="layui-form" style="margin: 0 auto;max-width: 460px;padding-top: 40px;">
                                     <div class="layui-form-item">
@@ -120,6 +119,31 @@
                                                     <option value="2">多晶硅太阳能板</option>
                                                     <option value="3">非晶硅太阳能板</option>
                                                 </select>
+                                            </div>
+                                        </div>
+                                        <!--房屋-->
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">房屋长度</label>
+                                            <div class="layui-input-block">
+                                                <input type="text" id="b_houseLength"
+                                                    lay-verify="required|number|houseLength" lay-reqtext="房屋长度不能为空"
+                                                    placeholder="请输入" autocomplete="off" class="layui-input">
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">房屋高度</label>
+                                            <div class="layui-input-block">
+                                                <input type="text" id="b_houseHigh"
+                                                    lay-verify="required|number|houseHigh" lay-reqtext="房屋高度不能为空"
+                                                    placeholder="请输入" autocomplete="off" class="layui-input">
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">房屋宽度</label>
+                                            <div class="layui-input-block">
+                                                <input type="text" id="b_houseWidth"
+                                                    lay-verify="required|number|houseWidth" lay-reqtext="房屋宽度不能为空"
+                                                    placeholder="请输入" autocomplete="off" class="layui-input">
                                             </div>
                                         </div>
                                         <!--建筑-->
@@ -149,7 +173,33 @@
                                                 </select>
                                             </div>
                                         </div>
+                                        <!--地区-->
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">光气候区</label>
+                                            <div class="layui-input-block">
+                                                <select id="b_lightClimate">
+                                                    <option value="0">Ⅰ区</option>
+                                                    <option value="1">Ⅱ区</option>
+                                                    <option value="2">Ⅲ区</option>
+                                                    <option value="3">Ⅳ区</option>
+                                                    <option value="4">Ⅴ区</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">采光等级</label>
+                                            <div class="layui-input-block">
+                                                <select id="b_lightLevel">
+                                                    <option value="0">Ⅰ型</option>
+                                                    <option value="1">Ⅱ型</option>
+                                                    <option value="2">Ⅲ型</option>
+                                                    <option value="3">Ⅳ型</option>
+                                                    <option value="4">Ⅴ型</option>
+                                                </select>
+                                            </div>
+                                        </div>
                                     </div>
+
                                     <div class="layui-form-item">
                                         <div class="layui-input-block">
                                             <button type="button" class="layui-btn layui-btn-primary pre">上一步</button>
@@ -160,7 +210,7 @@
                                     </div>
                                 </form>
                             </div>
-                            <!--玻璃与窗户-->
+                            <!--材料数据-->
                             <div>
                                 <form class="layui-form" style="margin: 0 auto;max-width: 460px;padding-top: 40px;">
                                     <!--玻璃 -->
@@ -208,46 +258,6 @@
                                                 </select>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="layui-form-item">
-                                        <div class="layui-input-block">
-                                            <button type="button" class="layui-btn layui-btn-primary pre">上一步</button>
-                                            <button class="layui-btn" lay-submit lay-filter="formStep4">
-                                                &emsp;下一步&emsp;
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                            <!--房屋-->
-                            <div>
-                                <form class="layui-form" style="margin: 0 auto;max-width: 460px;padding-top: 40px;">
-                                    <!--房屋-->
-                                    <div class="layui-form-item">
-                                        <div class="layui-inline">
-                                            <label class="layui-form-label">房屋长度</label>
-                                            <div class="layui-input-block">
-                                                <input type="text" id="b_houseLength"
-                                                    lay-verify="required|number|houseLength" lay-reqtext="房屋长度不能为空"
-                                                    placeholder="请输入" autocomplete="off" class="layui-input">
-                                            </div>
-                                        </div>
-                                        <div class="layui-inline">
-                                            <label class="layui-form-label">房屋高度</label>
-                                            <div class="layui-input-block">
-                                                <input type="text" id="b_houseHigh"
-                                                    lay-verify="required|number|houseHigh" lay-reqtext="房屋高度不能为空"
-                                                    placeholder="请输入" autocomplete="off" class="layui-input">
-                                            </div>
-                                        </div>
-                                        <div class="layui-inline">
-                                            <label class="layui-form-label">房屋宽度</label>
-                                            <div class="layui-input-block">
-                                                <input type="text" id="b_houseWidth"
-                                                    lay-verify="required|number|houseWidth" lay-reqtext="房屋宽度不能为空"
-                                                    placeholder="请输入" autocomplete="off" class="layui-input">
-                                            </div>
-                                        </div>
                                         <!--反射-->
                                         <div class="layui-inline">
                                             <label class="layui-form-label">棚顶反射比</label>
@@ -273,48 +283,8 @@
                                     <div class="layui-form-item">
                                         <div class="layui-input-block">
                                             <button type="button" class="layui-btn layui-btn-primary pre">上一步</button>
-                                            <button class="layui-btn" lay-submit lay-filter="formStep5">
-                                                &emsp;下一步&emsp;
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                            <!--地区-->
-                            <div>
-                                <form class="layui-form" style="margin: 0 auto;max-width: 460px;padding-top: 40px;">
-                                    <!--地区-->
-                                    <div class="layui-form-item">
-                                        <div class="layui-inline">
-                                            <label class="layui-form-label">光气候区</label>
-                                            <div class="layui-input-block">
-                                                <select id="b_lightClimate">
-                                                    <option value="0">Ⅰ区</option>
-                                                    <option value="1">Ⅱ区</option>
-                                                    <option value="2">Ⅲ区</option>
-                                                    <option value="3">Ⅳ区</option>
-                                                    <option value="4">Ⅴ区</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="layui-inline">
-                                            <label class="layui-form-label">采光等级</label>
-                                            <div class="layui-input-block">
-                                                <select id="b_lightLevel">
-                                                    <option value="0">Ⅰ型</option>
-                                                    <option value="1">Ⅱ型</option>
-                                                    <option value="2">Ⅲ型</option>
-                                                    <option value="3">Ⅳ型</option>
-                                                    <option value="4">Ⅴ型</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="layui-form-item">
-                                        <div class="layui-input-block">
-                                            <button type="button" class="layui-btn layui-btn-primary pre">上一步</button>
-                                            <button class="layui-btn" lay-submit lay-filter="formStep6">
-                                                &emsp;提交&emsp;
+                                            <button class="layui-btn" lay-submit lay-filter="formStep4">
+                                                &emsp;分析&emsp;
                                             </button>
                                         </div>
                                     </div>
@@ -372,17 +342,13 @@
                 stepWidth: '750px',
                 height: '500px',
                 stepItems: [{
-                    title: '位置'
+                    title: '位置信息'
                 }, {
-                    title: '方位角'
+                    title: '方位信息'
                 }, {
                     title: '光伏与建筑'
                 }, {
-                    title: '玻璃与窗户'
-                }, {
-                    title: '房屋'
-                }, {
-                    title: '地区'
+                    title: '材料信息'
                 }]
             });
 
@@ -494,6 +460,11 @@
                 $('#photovoltaicPanelType').val($('#b_photovoltaicPanelType').val())
                 $('#houseType').val($('#b_houseType').val())
                 $('#buildingType').val($('#b_buildingType').val())
+                $('#houseLength').val($('#b_houseLength').val())
+                $('#houseHigh').val($('#b_houseHigh').val())
+                $('#houseWidth').val($('#b_houseWidth').val())
+                $('#lightClimate').val($('#b_lightClimate').val())
+                $('#lightLevel').val($('#b_lightLevel').val())
                 step.next('#stepForm');
                 return false;
             });
@@ -503,28 +474,12 @@
                 $('#glassSpecifications').val($('#b_glassSpecifications').val())
                 $('#windowsType').val($('#b_windowsType').val())
                 $('#windowsMaterial').val($('#b_windowsMaterial').val())
-                step.next('#stepForm');
-                return false;
-            });
-            //表5
-            form.on('submit(formStep5)', function (data) {
-                $('#houseLength').val($('#b_houseLength').val())
-                $('#houseHigh').val($('#b_houseHigh').val())
-                $('#houseWidth').val($('#b_houseWidth').val())
                 $('#shedReflect').val($('#b_shedReflect').val())
                 $('#wallReflect').val($('#b_wallReflect').val())
-                step.next('#stepForm');
-                return false;
-            });
-            //表6
-            form.on('submit(formStep6)', function (data) {
-                $('#lightClimate').val($('#b_lightClimate').val())
-                $('#lightLevel').val($('#b_lightLevel').val())
                 //提交表单
                 $("#hiddenForm").submit()
                 return false;
             });
-
 
             $('.pre').click(function () {
                 step.pre('#stepForm');
