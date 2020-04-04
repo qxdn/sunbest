@@ -31,6 +31,9 @@ public class DesignController {
         return "design";
     }
 
-
+    @RequestMapping("/showBuilding")
+    public String showBuilding(){
+        return "showbuilding";
+    }
 
 }
