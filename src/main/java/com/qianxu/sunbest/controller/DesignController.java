@@ -1,17 +1,13 @@
 package com.qianxu.sunbest.controller;
 
 import com.qianxu.sunbest.model.Answer;
-import com.qianxu.sunbest.model.Predict;
 import com.qianxu.sunbest.model.UserDefine;
 import com.qianxu.sunbest.service.api.ModelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-
-import java.text.DecimalFormat;
 
 
 @Controller
@@ -35,18 +31,6 @@ public class DesignController {
         return "design";
     }
 
-    @PostMapping("/BestAngle")
-    @ResponseBody
-    public String getBestAngle(Predict predict){
-        DecimalFormat df=new DecimalFormat("#0.00");
-        Double angle= modelService.getBestAngle(predict);
-        return df.format(angle);
-    }
 
 
-    @PostMapping("/api")
-    @ResponseBody
-    public Answer designApi(UserDefine userDefine){
-        return  modelService.getAnswer(userDefine);
-    }
 }
