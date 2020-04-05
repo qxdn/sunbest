@@ -59,6 +59,9 @@
                                                     class="layui-input">
                                             </div>
                                         </div>
+                                        <div class="layui-inline">
+                                            <button type="button" class="layui-btn" id="getMap">查看地图</button>
+                                        </div>
                                         <div class="layui-form-item">
                                             <div class="layui-input-block">
                                                 <!--注意filter-->
@@ -148,15 +151,6 @@
                                                     </div>
                                                 </div>
                                                 <div class="layui-inline">
-                                                    <label class="layui-form-label">房屋高度</label>
-                                                    <div class="layui-input-block">
-                                                        <input type="text" id="b_houseHigh"
-                                                            lay-verify="required|number|houseHigh"
-                                                            lay-reqtext="房屋高度不能为空" placeholder="请输入" autocomplete="off"
-                                                            class="layui-input">
-                                                    </div>
-                                                </div>
-                                                <div class="layui-inline">
                                                     <label class="layui-form-label">房屋宽度</label>
                                                     <div class="layui-input-block">
                                                         <input type="text" id="b_houseWidth"
@@ -165,6 +159,15 @@
                                                             class="layui-input">
                                                     </div>
                                                 </div>
+                                                <div class="layui-inline">
+                                                    <label class="layui-form-label">房屋高度</label>
+                                                    <div class="layui-input-block">
+                                                        <input type="text" id="b_houseHigh"
+                                                            lay-verify="required|number|houseHigh"
+                                                            lay-reqtext="房屋高度不能为空" placeholder="请输入" autocomplete="off"
+                                                            class="layui-input">
+                                                    </div>
+                                                </div>    
                                                 <!--建筑-->
                                                 <div class="layui-inline">
                                                     <label class="layui-form-label">房屋类型</label>
@@ -420,6 +423,31 @@
             function getOption(value, text) {
                 var option = "<option value='" + value + "'>" + text + "</option>";
                 return option;
+            }
+
+            $('#getMap').click(function () {
+                lonData = $("#b_lon").val();
+                latData = $("#b_lat").val();
+                if (false == verifyLonAndLat(lonData, latData)) {
+                    layer.msg("请输入正确的经纬度")
+                    return;
+                }
+                layer.open({
+                    type: 2,
+                    title: '位置',
+                    area: ['893px', '600px'],
+                    content: '/design/getMap/' + lonData + '/' + latData //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: 
+                })
+            })
+
+            function verifyLonAndLat(lon, lat) {
+                if (isNaN(lon) || lon > 180 || lon < -180) {
+                    return false;
+                }
+                if (isNaN(lat) || lat > 90 || lat < -90) {
+                    return false;
+                }
+                return true;
             }
 
             //预测倾角
