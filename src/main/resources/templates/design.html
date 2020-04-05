@@ -92,7 +92,7 @@
                                                     <button type="button" class="layui-btn" id="predict">预测倾角</button>
                                                 </div>
                                                 <div class="layui-inline">
-                                                    <label class="layui-form-label">自定义倾角</label>
+                                                    <label class="layui-form-label">自定义坡度</label>
                                                     <div class="layui-input-block">
                                                         <input type="text" id="b_userAngle"
                                                             lay-verify="required|number|userAngle" value="0"
@@ -167,7 +167,7 @@
                                                             lay-reqtext="房屋高度不能为空" placeholder="请输入" autocomplete="off"
                                                             class="layui-input">
                                                     </div>
-                                                </div>    
+                                                </div>
                                                 <!--建筑-->
                                                 <div class="layui-inline">
                                                     <label class="layui-form-label">房屋类型</label>
@@ -234,7 +234,7 @@
                                         </form>
                                     </div>
                                     <div class="layui-col-md5">
-                                        <iframe src="/design/showBuilding" width="400px" height="440px"></iframe>
+                                        <iframe src="/design/showBuilding" width="400px" height="300px" style="margin-top: 50px; border: medium none;"></iframe>
                                     </div>
                                 </div>
                             </div>
@@ -489,8 +489,8 @@
                         return '方位角范围在-90到90';
                     }
                 }, userAngle: function (value) {
-                    if (value > 90 || value < -90) {
-                        return '自定义倾角角范围在-90到90';
+                    if (value < 0) {
+                        return '自定义坡度需要大于0'
                     }
                 }, houseLength: function (value) {
                     if (value <= 0) {
@@ -518,7 +518,10 @@
             //表2
             form.on('submit(formStep2)', function (data) {
                 $('#azimuth').val($('#b_azimuth').val())
-                $('#userAngle').val($('#b_userAngle').val())
+                //$('#userAngle').val($('#b_userAngle').val())
+                l = $('#b_userAngle').val();
+                angle = Math.atan(l) * 180 / Math.PI;
+                $('#userAngle').val(angle);
                 step.next('#stepForm');
                 return false;
             });

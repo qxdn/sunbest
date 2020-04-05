@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
   <meta http-equiv="Content-Type" content="text/html">
@@ -43,22 +43,25 @@
           <!--背景-->
           <div style="padding: 20px; background-color: #F2F2F2;">
             <div class="layui-row layui-col-space15">
-              <div class="layui-col-md9">
-                <div class="layui-card">
+              <div class="layui-col-md6">
+                <div class="layui-card" style="height:240px;">
                   <div class="layui-card-header">分析结果</div>
                   <div class="layui-card-body">
                     <p>最佳倾角:<span th:text="${#numbers.formatDecimal(answer.bestAngle,1,2)}"></span>°</p>
-                              <p>年平均发电量:<span th:text="${#numbers.formatDecimal(answer.averagePowerGeneration,1,2)}"></span> kWh/m²/day</p>
-                              <p>节约照明用电:<span th:text="${#numbers.formatDecimal(answer.savePower,1,2)}"></span>kw/h</p>
-                              <p>年预计发电量:<span th:text="${#numbers.formatDecimal(answer.expectPowerGeneration,1,2)}"></span>度/年</p>
+                    <hr>                              
+                    <p>年平均发电量:<span th:text="${#numbers.formatDecimal(answer.averagePowerGeneration,1,2)}"></span> kWh/m²/day</p>
+                    <hr>
+                    <p>节约照明用电:<span th:text="${#numbers.formatDecimal(answer.savePower,1,2)}"></span>kw/h</p>
+                    <hr>
+                    <p>年预计发电量:<span th:text="${#numbers.formatDecimal(answer.expectPowerGeneration,1,2)}"></span>度/年</p>
                             </div>
                           </div>
                         </div>
-                        <div class="layui-col-md3"> 
-                          <div class="layui-card">
-                            <div class="layui-card-header">倾角</div>
-                            <div class="layui-card-body">
-                                <img src="img/showAngle.png" height="95px" alt="倾角" />
+                        <div class="layui-col-md6"> 
+                          <div class="layui-card" style="height:240px;">
+                            <div class="layui-card-header" >倾角</div>
+                            <div class="layui-card-body" style="text-align: center;">
+                                <img src="img/showAngle.png" style="width: 500px;"  alt="倾角" />
                             </div>
                           </div>
                         </div>
