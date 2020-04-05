@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="layui/css/layui.css" media="all">
   <script type="text/javascript" src="js/echarts.min.js"></script>
   <script src="layui/layui.js" charset="utf-8"></script>
-  <script type="text/javascript" src="https://api.map.baidu.com/api?v=3.0&ak=你的密钥"></script>
+  <script type="text/javascript" src="https://api.map.baidu.com/api?v=3.0&你的密钥"></script>
 </head>
 
 
@@ -60,13 +60,13 @@
                     <div class="layui-card" style="height:240px;">
                       <div class="layui-card-header">分析结果</div>
                       <div class="layui-card-body">
-                        <p>最佳倾角:<span th:text="${#numbers.formatDecimal(answer.bestAngle,1,2)}"></span>°</p>
+                        <p>最佳坡度:<span th:text="${#numbers.formatDecimal(answer.bestAngle,1,3)}"></span></p>
                         <hr>                              
                         <p>年平均发电量:<span th:text="${#numbers.formatDecimal(answer.averagePowerGeneration,1,2)}"></span> kWh/m²/day</p>
                         <hr>
                         <p>节约照明用电:<span th:text="${#numbers.formatDecimal(answer.savePower,1,2)}"></span>kw/h</p>
                         <hr>
-                        <p>年预计发电量:<span th:text="${#numbers.formatDecimal(answer.expectPowerGeneration,1,2)}"></span>度/年</p>
+                        <p>年预计发电量:<span th:text="${#numbers.formatDecimal(answer.expectPowerGeneration,1,2)}"></span>度/m²/年</p>
                                 </div>
                               </div>
                             </div>
@@ -145,7 +145,7 @@
                                 <div class="layui-card-header">节能</div>
                                 <div class="layui-card-body">
                                   <br>
-                                  <p>年预计发电量:<span th:text="${#numbers.formatDecimal(answer.expectPowerGeneration,1,2)}"></span>度/年</p>
+                                  <p>年预计发电量:<span th:text="${#numbers.formatDecimal(answer.expectPowerGeneration,1,2)}"></span>度/m²/年</p>
                                   <hr>
                                   <p>节约照明用电:<span th:text="${#numbers.formatDecimal(answer.savePower,1,2)}"></span>kw/h</p>
                                 </div>

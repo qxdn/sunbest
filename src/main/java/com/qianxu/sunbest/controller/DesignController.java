@@ -3,6 +3,8 @@ package com.qianxu.sunbest.controller;
 import com.qianxu.sunbest.model.Answer;
 import com.qianxu.sunbest.model.UserDefine;
 import com.qianxu.sunbest.service.api.ModelService;
+import com.qianxu.sunbest.util.AngleConvert;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +22,9 @@ public class DesignController {
     @PostMapping("/handle")
     public ModelAndView submit(UserDefine userDefine) {
         Answer answer = modelService.getAnswer(userDefine);
+        //将倾角转换为坡度
+        answer.setBestAngle(AngleConvert.convertAngle2Slope(answer.getBestAngle()));
+
         ModelAndView mv = new ModelAndView();
         mv.setViewName("result");
         mv.addObject("answer", answer);

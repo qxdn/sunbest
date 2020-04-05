@@ -89,7 +89,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="layui-inline">
-                                                    <button type="button" class="layui-btn" id="predict">预测倾角</button>
+                                                    <button type="button" class="layui-btn" id="predict">预测坡度</button>
                                                 </div>
                                                 <div class="layui-inline">
                                                     <label class="layui-form-label">自定义坡度</label>
@@ -466,7 +466,7 @@
                     },
                     dataType: "json",
                     success: function (data) {
-                        layer.msg("最佳倾角:" + data + "°");
+                        layer.msg("最佳坡度:" + data );
                     },
                     error: function (data) {
                         layer.msg("出错啦");
