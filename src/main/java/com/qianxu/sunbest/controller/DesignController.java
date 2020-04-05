@@ -23,10 +23,25 @@ public class DesignController {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("result");
         mv.addObject("answer", answer);
-        //TODO: 这是瞎编的数据
-        mv.addObject("windowsNumber", 2);
-        Double area=userDefine.getHouseLength()*userDefine.getHouseWidth();
-        mv.addObject("simulation", area);
+        
+        //房屋面积
+        Double houseArea = userDefine.getHouseLength() * userDefine.getHouseWidth();
+        mv.addObject("simulation", houseArea);
+
+        // TODO: 天窗个数 瞎编的
+        int number = 0;
+        if (answer.getArea() < 20) {
+            number = 5;
+        } else {
+            number = 21;
+        }
+        mv.addObject("windowsNumber", number);
+        // 天窗成本 真实数据
+        mv.addObject("windowsCos", modelService.getWindowsCos(answer.getArea(), number));
+        // 太阳能板成本
+        mv.addObject("boardCos", modelService.getBoardCos(houseArea, answer.getArea()));
+        //其他成本
+        mv.addObject("otherCos", modelService.getOtherCos(number));
         return mv;
     }
 
@@ -41,7 +56,7 @@ public class DesignController {
     }
 
     @RequestMapping("/getMap/{lon}/{lat}")
-    public ModelAndView getMap(@PathVariable("lon") Double lon,@PathVariable("lat") Double lat) {
+    public ModelAndView getMap(@PathVariable("lon") Double lon, @PathVariable("lat") Double lat) {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("baiduMap");
         mv.addObject("lon", lon);
