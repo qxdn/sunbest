@@ -60,13 +60,5 @@ public class DesignController {
         return "showbuilding";
     }
 
-    @RequestMapping("/getMap/{lon}/{lat}")
-    public ModelAndView getMap(@PathVariable("lon") Double lon, @PathVariable("lat") Double lat) {
-        ModelAndView mv = new ModelAndView();
-        mv.setViewName("baiduMap");
-        mv.addObject("lon", lon);
-        mv.addObject("lat", lat);
-        return mv;
-    }
 
 }

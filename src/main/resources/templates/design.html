@@ -12,6 +12,19 @@
     <link rel="stylesheet" href="step-lay/step.css" media="all">
     <script src="layui/layui.js" charset="utf-8"></script>
     <script src="step-lay/step.js"></script>
+    <script type="text/javascript"
+        src="https://api.map.baidu.com/api?v=3.0&ak=你的密钥"></script>
+    <style type="text/css">
+        body,
+        html,
+        #container {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            margin: 0;
+            font-family: "微软雅黑";
+        }
+    </style>
 </head>
 
 <body>
@@ -40,34 +53,43 @@
                         <div carousel-item>
                             <!--位置信息-->
                             <div>
-                                <form class="layui-form" style="margin: 0 auto;max-width: 460px;padding-top: 40px;">
-                                    <!--经纬度-->
-                                    <div class="layui-form-item">
-                                        <div class="layui-inline">
-                                            <label class="layui-form-label">经度</label>
-                                            <div class="layui-input-block">
-                                                <input id="b_lon" type="text" lay-verify="required|number|lon"
-                                                    lay-reqtext="经度不能为空" placeholder="请输入" value="0"
-                                                    class="layui-input">
+                                <form class="layui-form" style="margin: 0 auto;max-width: 460px;padding-top: 40px;"
+                                    onkeydown="if(event.keyCode==13) return false;">
+                                    <div class="layui-row layui-col-space15">
+                                        <div class="layui-col-md7">
+                                            <!--经纬度-->
+                                            <div class="layui-form-item">
+                                                <div class="layui-inline">
+                                                    <label class="layui-form-label">经度</label>
+                                                    <div class="layui-input-block">
+                                                        <input id="b_lon" type="text" lay-verify="required|number|lon"
+                                                            lay-reqtext="经度不能为空" placeholder="请输入" value="116.33"
+                                                            class="layui-input">
+                                                    </div>
+                                                </div>
+                                                <div class="layui-inline">
+                                                    <label class="layui-form-label">纬度</label>
+                                                    <div class="layui-input-block">
+                                                        <input id="b_lat" type="text" lay-verify="required|number|lat"
+                                                            lay-reqtext="纬度不能为空" placeholder="请输入" value="39.89"
+                                                            class="layui-input">
+                                                    </div>
+                                                </div>
+                                                <div class="layui-form-item">
+                                                    <div class="layui-input-block">
+                                                        <!--注意filter-->
+                                                        <button class="layui-btn" lay-submit lay-filter="formStep">
+                                                            &emsp;下一步&emsp;
+                                                        </button>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="layui-inline">
-                                            <label class="layui-form-label">纬度</label>
-                                            <div class="layui-input-block">
-                                                <input id="b_lat" type="text" lay-verify="required|number|lat"
-                                                    lay-reqtext="纬度不能为空" placeholder="请输入" value="0"
-                                                    class="layui-input">
-                                            </div>
-                                        </div>
-                                        <div class="layui-inline">
-                                            <button type="button" class="layui-btn" id="getMap">查看地图</button>
-                                        </div>
-                                        <div class="layui-form-item">
-                                            <div class="layui-input-block">
-                                                <!--注意filter-->
-                                                <button class="layui-btn" lay-submit lay-filter="formStep">
-                                                    &emsp;下一步&emsp;
-                                                </button>
+                                        <div class="layui-col-md3">
+                                            <div style="height: 400px; width:400px;">
+                                                <div id="container">
+
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -234,7 +256,8 @@
                                         </form>
                                     </div>
                                     <div class="layui-col-md5">
-                                        <iframe src="/design/showBuilding" width="400px" height="300px" style="margin-top: 50px; border: medium none;"></iframe>
+                                        <iframe src="/design/showBuilding" width="400px" height="300px"
+                                            style="margin-top: 50px; border: medium none;"></iframe>
                                     </div>
                                 </div>
                             </div>
@@ -394,21 +417,61 @@
                 }]
             });
 
-            //地理位置
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(showPosition);
-            } else {
-                layer.msg("您的浏览器不支持地理位置");
-            }
+            //百度地图
+            var mp = new BMap.Map("container");
+            mp.enableScrollWheelZoom();
+            var point = new BMap.Point(116.331398, 39.897445);
+            mp.centerAndZoom(point, 12);
+            var mk = new BMap.Marker(point);
+            mp.addOverlay(mk);
+            //获取地理位置
+            var geolocation = new BMap.Geolocation();
+            geolocation.getCurrentPosition(function (r) {
+                if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+                    mp.clearOverlays()
+                    mp.panTo(r.point)
+                    var mk = new BMap.Marker(r.point);
+                    mp.addOverlay(mk);
+                    $("#b_lon").val(financial(r.point.lng));
+                    $("#b_lat").val(financial(r.point.lat));
+                }
+                else {
+                    layer.msg("获取位置失败")
+                }
+            }, { enableHighAccuracy: true })
+            //保留小数
             function financial(x) {
-                return Number.parseFloat(x).toFixed(2);
+                return Number.parseFloat(x).toFixed(3);
             }
-            function showPosition(position) {
-                console.log(position)
-                $("#b_lat").val(financial(position.coords.latitude));
-                $("#b_lon").val(financial(position.coords.longitude));
+            //改变事件刷新地图
+            $('#b_lon').change(function () {
+                changeMap();
+            })
+            $('#b_lat').change(function () {
+                changeMap();
+            })
+            //验证经纬度
+            function verifyLonAndLat(lon, lat) {
+                if (isNaN(lon) || lon > 180 || lon < -180) {
+                    return false;
+                }
+                if (isNaN(lat) || lat > 90 || lat < -90) {
+                    return false;
+                }
+                return true;
             }
-
+            //改变地图
+            function changeMap() {
+                lon = $('#b_lon').val();
+                lat = $('#b_lat').val();
+                if (verifyLonAndLat(lon, lat)) {
+                    mp.clearOverlays()
+                    point = new BMap.Point(lon, lat)
+                    mp.panTo(point)
+                    var marker = new BMap.Marker(point);
+                    mp.addOverlay(marker);
+                }
+            }
             //级联表单
             form.on("select(b_glassType)", function (data) {
                 var index = data.elem.value;
@@ -425,30 +488,6 @@
                 return option;
             }
 
-            $('#getMap').click(function () {
-                lonData = $("#b_lon").val();
-                latData = $("#b_lat").val();
-                if (false == verifyLonAndLat(lonData, latData)) {
-                    layer.msg("请输入正确的经纬度")
-                    return;
-                }
-                layer.open({
-                    type: 2,
-                    title: '位置',
-                    area: ['893px', '600px'],
-                    content: '/design/getMap/' + lonData + '/' + latData //这里content是一个URL，如果你不想让iframe出现滚动条，你还可以content: 
-                })
-            })
-
-            function verifyLonAndLat(lon, lat) {
-                if (isNaN(lon) || lon > 180 || lon < -180) {
-                    return false;
-                }
-                if (isNaN(lat) || lat > 90 || lat < -90) {
-                    return false;
-                }
-                return true;
-            }
 
             //预测倾角
             $("#predict").click(function () {
@@ -466,7 +505,7 @@
                     },
                     dataType: "json",
                     success: function (data) {
-                        layer.msg("最佳坡度:" + data );
+                        layer.msg("最佳坡度:" + data);
                     },
                     error: function (data) {
                         layer.msg("出错啦");
