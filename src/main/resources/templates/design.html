@@ -53,10 +53,11 @@
                         <div carousel-item>
                             <!--位置信息-->
                             <div>
-                                <form class="layui-form" style="margin: 0 auto;max-width: 460px;padding-top: 40px;"
-                                    onkeydown="if(event.keyCode==13) return false;">
-                                    <div class="layui-row layui-col-space15">
-                                        <div class="layui-col-md7">
+                                <div class="layui-row layui-col-space15">
+                                    <div class="layui-col-md6" style="text-align: center;">
+                                        <form class="layui-form"
+                                            style="margin: 0 auto;max-width: 460px;padding-top: 40px;"
+                                            onkeydown="if(event.keyCode==13) return false;">
                                             <!--经纬度-->
                                             <div class="layui-form-item">
                                                 <div class="layui-inline">
@@ -84,16 +85,16 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="layui-col-md3">
-                                            <div style="height: 400px; width:400px;">
-                                                <div id="container">
-
-                                                </div>
+                                        </form>
+                                    </div>
+                                    <div class="layui-col-md6">
+                                        <div style="height: 400px; width:100%;">
+                                            <div id="container">
                                             </div>
                                         </div>
                                     </div>
-                                </form>
+
+                                </div>
                             </div>
                             <!--方位信息-->
                             <div>
