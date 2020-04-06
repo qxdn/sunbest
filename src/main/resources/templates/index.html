@@ -14,6 +14,7 @@
     blockquote {
       text-indent: 2em;
       font-size: large;
+      text-align: left;
     }
 
     body {
@@ -21,7 +22,7 @@
       background-image: url(img/bg.jpg);
       background-repeat: no-repeat;
       background-position: 0px 0px;
-      background-size: 100% 25%;
+      background-size: 100% 90%;
     }
 
     h1 {
@@ -52,8 +53,8 @@
     </ul>
   </div>
 
-  <div class="part1" style="position:absolute; left:120px; top:100px; width:500px ">
-    <h1>智能设计平台</h1>
+  <div class="part1" style="position:absolute; left:3%; top:10%; width:700px ">
+    <h1>光伏智能屋顶设计平台</h1>
     <p1>本平台旨在为非建材型光伏建筑设计者提供安全、节能、便捷的设计方案。</p1>
   </div>
   <!--全屏-->
@@ -68,213 +69,232 @@
     </div>
     <div class="layui-col-md3" style="margin-top: 10%; height: 400px;">
       <div sec:authorize="!isAuthenticated()">
-      <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;  ">
-        <div style="padding: 20px; background-color: #F4F4F4;">
-          <legend style="margin-left: 130px;">登录</legend>
-          <div class="layui-form layui-tab-content" id="LAY_ucm" style="padding: 20px 0;">
-            <div class="layui-tab-item layui-show">
-              <div class="layui-form layui-form-pane">
-                <form class="layui-form" method="post" action="/login">
-                  <label layui-text class="layui-form-item" th:if="${param.error}"
-                    th:text="${session?.SPRING_SECURITY_LAST_EXCEPTION?.message}"></label>
-                  <div class="layui-form-item">
-                    <label class="layui-form-label">邮箱</label>
-                    <div class="layui-input-inline">
-                      <input type="email" name="email" lay-verify="required|email" placeholder="请输入邮箱"
-                        lay-reqtext="请输入邮箱" class="layui-input">
+        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;  ">
+          <div style="padding: 20px; background-color: #F4F4F4;">
+            <legend style="margin-left: 130px;">登录</legend>
+            <div class="layui-form layui-tab-content" id="LAY_ucm" style="padding: 20px 0;">
+              <div class="layui-tab-item layui-show">
+                <div class="layui-form layui-form-pane">
+                  <form class="layui-form" method="post" action="/login">
+                    <label layui-text class="layui-form-item" th:if="${param.error}"
+                      th:text="${session?.SPRING_SECURITY_LAST_EXCEPTION?.message}"></label>
+                    <div class="layui-form-item">
+                      <label class="layui-form-label">邮箱</label>
+                      <div class="layui-input-inline">
+                        <input type="email" name="email" lay-verify="required|email" placeholder="请输入邮箱"
+                          lay-reqtext="请输入邮箱" class="layui-input">
+                      </div>
                     </div>
-                  </div>
-                  <div class="layui-form-item">
-                    <label class="layui-form-label">密码</label>
-                    <div class="layui-input-inline">
-                      <input type="password" name="password" lay-verify="required|password" placeholder="请输入密码"
-                        lay-reqtext="请输入6~12位密码" class="layui-input">
+                    <div class="layui-form-item">
+                      <label class="layui-form-label">密码</label>
+                      <div class="layui-input-inline">
+                        <input type="password" name="password" lay-verify="required|password" placeholder="请输入密码"
+                          lay-reqtext="请输入6~12位密码" class="layui-input">
+                      </div>
                     </div>
-                  </div>
-                  <div class="layui-form-item">
-                    <label class="layui-form-label">记住我</label>
-                    <div class="layui-input-inline">
-                      <input type="checkbox" name="remember" lay-skin="switch">
+                    <div class="layui-form-item">
+                      <label class="layui-form-label">记住我</label>
+                      <div class="layui-input-inline">
+                        <input type="checkbox" name="remember" lay-skin="switch">
+                      </div>
                     </div>
-                  </div>
-                  <div class="layui-form-item">
-                    <div class="layui-input-block layui-input-inline">
-                      <button type="submit" class="layui-btn" lay-submit="" lay-filter="submitDesign">登录</button>
-                      <a href="/toRegister" class="layui-btn">注册</a>
+                    <div class="layui-form-item">
+                      <div class="layui-input-block layui-input-inline">
+                        <button type="submit" class="layui-btn" lay-submit="" lay-filter="submitDesign">登录</button>
+                        <a href="/toRegister" class="layui-btn">注册</a>
+                      </div>
                     </div>
-                  </div>
-                </form>
+                  </form>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </fieldset>
+        </fieldset>
+      </div>
+      <div sec:authorize="isAuthenticated()">
+        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;  ">
+          <div style="padding: 20px; background-color: #F4F4F4; text-align: center;">
+            <legend style="margin-right: 40px;"> <i class="layui-icon layui-icon-username"
+                style="font-size: 30px; color: #1E9FFF;"></i> </legend>
+            <blockquote class="layui-elem-quote layui-quote-nm"><span>欢迎<span sec:authentication="name"></span></span></blockquote>
+            <div class="layui-row">
+              <div class="layui-col-md6" style="text-align: center;"> 
+                <a class="layui-btn" href="/design/toDesign">设计</a>
+              </div>
+              <div class="layui-col-md6" style="text-align: center;"> 
+                <a class="layui-btn" href="/logout">登出</a>
+              </div>
+            </div>
+          </div>
+        </fieldset>
       </div>
     </div>
     <div class="layui-col-md1"></div>
   </div>
-  <!--/div-->
 
-  <div class="layui-row layui-col-space10">
-    <div class="layui-col-md1">
 
-    </div>
-    <div class="layui-col-md3">
-      <fieldset class="layui-elem-field layui-field-title" style="margin-top: 150px;  ">
-        <div class="layui-tab" style="width: 750px; height:2000px; ">
+  <div class="layui-carousel" id="building" style="margin-top: 8%; ">
+    <div carousel-item>
+      <!--第一张-->
+      <div>
+        <span class="layui-colorpicker-trigger-span">
 
-          <ul class="layui-tab-title">
-            <li class="layui-this">整体简述</li>
-            <li>设计方案</li>
-            <li>效果预览</li>
-          </ul>
+          <div class="layui-row">
 
-          <div class="layui-tab-content">
-
-            <div class="layui-tab-item layui-show">
-              <div class="layui-row">
-
-                <div class="layui-col-md8">
-                  <div class="grid-demo grid-demo-bg1">
-                    <img src="img/fangwu1.jpg" style="width:400px; height:300px;  ">
-                  </div>
-                </div>
-
-                <div class="layui-col-md4">
-                  <div class="grid-demo">
-                    <div class="part2" style=" left:800px; top:1000px; width:650px">
-                      <br><br>
-                      <blockquote class="layui-elem-quote">
-                        <p>近些年来，能源危机与环境问题成为人类追求可持续发展道路上的两个重大挑战，据研究表明世界建筑能耗占世界总能耗的33%，因此低能耗建筑的研究应用受到广泛重视。</p>
-                        <p>针对于目前华中等光照资源较丰富、季节分明地区的屋顶光能利用率较低的问题，本项目开发出了一种集多感知、智能化、一体化的光伏智能屋顶系统。
-                          光伏屋顶一体化的设计不仅增强了光伏板的散热能力，提升了光伏转换效率，而且通过对天窗的开合控制，可避免天窗玻璃暴露雾霾、大风天气中，以节省后期天窗玻璃的维护和清洁成本。
-                          本项目提高了光伏板发电效率、节约照明用电和人力维护成本，具有良好的节能减排效益。</p>
-                      </blockquote>
-                    </div>
-                  </div>
-                </div>
-
+            <div class="layui-col-md5">
+              <div class="grid-demo grid-demo-bg1">
+                <img src="img/fangwu1.jpg" style="width:400px; height:300px;  ">
               </div>
             </div>
 
-            <div class="layui-tab-item">
-              <div class="layui-row">
-
-                <div class="layui-col-md8">
-                  <div class="grid-demo grid-demo-bg1">
-                    <img src="img/shiwumoxing.png" style="width:400px; height:300px;  ">
-                  </div>
+            <div class="layui-col-md7">
+              <div class="grid-demo">
+                <div class="part2" style=" left:800px; top:1000px; width:650px">
+                  <br><br>
+                  <blockquote class="layui-elem-quote">
+                    <p>近些年来，能源危机与环境问题成为人类追求可持续发展道路上的两个重大挑战，据研究表明世界建筑能耗占世界总能耗的33%，因此低能耗建筑的研究应用受到广泛重视。</p>
+                    <p>针对于目前华中等光照资源较丰富、季节分明地区的屋顶光能利用率较低的问题，本项目开发出了一种集多感知、智能化、一体化的光伏智能屋顶系统。
+                      光伏屋顶一体化的设计不仅增强了光伏板的散热能力，提升了光伏转换效率，而且通过对天窗的开合控制，可避免天窗玻璃暴露雾霾、大风天气中，以节省后期天窗玻璃的维护和清洁成本。
+                      本项目提高了光伏板发电效率、节约照明用电和人力维护成本，具有良好的节能减排效益。</p>
+                  </blockquote>
                 </div>
-
-                <div class="layui-col-md4">
-                  <div class="grid-demo">
-                    <div class="part2" style=" left:800px; top:1000px; width:500px">
-                      <br><br>
-                      <blockquote class="layui-elem-quote">
-                        一体化光伏屋顶建筑由光伏电池板和智能天窗组成，智能天窗具备移动端控制功能，设计更加环保，工作更为智能；太阳能板利用太阳能发电，实现零耗能建筑。</blockquote>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="layui-col-md8">
-                  <div class="grid-demo grid-demo-bg1">
-                    <img src="img/suanfatu.png" style="width:400px; height:300px;  ">
-                  </div>
-                </div>
-
-                <div class="layui-col-md4">
-                  <div class="grid-demo">
-                    <div class="part2" style=" left:800px; top:1000px; width:500px">
-                      <br><br>
-                      <blockquote class="layui-elem-quote">
-                        修正的HT模型和熵权分析法结合，提出了感知光伏倾角算法计算全年太阳辐射能量最大的光伏倾角；提出了最佳顶部天窗排布模型确定室内最佳采光的天窗分布位置，上述设计方案均可在设计平台网页端查询。
-                      </blockquote>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-
-            <div class="layui-tab-item">
-              <div style="margin-top: 20px; width: 1000px;">
-                <h1> 1.室内采光光学分析</h1>
-              </div>
-
-              <div class="layui-row">
-                <div class="layui-col-md8">
-                  <div class="grid-demo grid-demo-bg1">
-                    <img src="img/guangxue1.png" style="width:400px; height:300px;  ">
-                  </div>
-                </div>
-
-                <div class="layui-col-md4">
-                  <div class="grid-demo">
-                    <img src="img/guangxue2.png" style="width:400px; height:300px;  ">
-                  </div>
-                </div>
-              </div>
-
-              <div style="margin-top: 20px; width: 1000px;">
-
-                <blockquote class="layui-elem-quote">
-                  上左图为采用智能天窗排布的采光，天窗排布算法中通过对透过天窗射入室内的光线建立天窗排布模型，以确定最佳的天窗面积和天窗排布方式，在尽可能使用最小的天窗总面积使室内光线最均匀适度。</blockquote>
-
-              </div>
-
-              <div style="margin-top: 20px; width: 1000px;">
-
-                <h1>2.热学分析</h1>
-
-              </div>
-
-              <div class="layui-row">
-                <div class="layui-col-md8">
-                  <div class="grid-demo grid-demo-bg1">
-                    <img src="img/rexue1.png" style="width:445px; height:200px;  ">
-                  </div>
-                </div>
-
-                <div class="layui-col-md4">
-                  <div class="grid-demo">
-                    <img src="img/rexue2.png" style="width:445px; height:200px;  ">
-                  </div>
-                </div>
-              </div>
-
-              <div style="margin-top: 40px; width: 1000px;">
-
-                <blockquote class="layui-elem-quote">一体化智能光伏屋顶中智能天窗将光伏阵列分割开来，增强了光伏板阵列的散热性，减小了光伏板阵列背面的温度，提高了光伏板的发电效率。
-                </blockquote>
-
               </div>
             </div>
 
           </div>
-      </fieldset>
+
+        </span>
+      </div>
+
+      <!--第二张-->
+      <div>
+        <span class="layui-colorpicker-trigger-span">
+
+          <div class="layui-row">
+
+            <div class="layui-col-md5">
+              <div class="grid-demo grid-demo-bg1">
+                <img src="img/shiwumoxing.jpg" style="width:400px; height:300px;  ">
+              </div>
+            </div>
+
+            <div class="layui-col-md7">
+              <div class="grid-demo">
+                <div class="part2" style=" left:800px; top:1000px; width:650px">
+                  <br><br>
+                  <blockquote class="layui-elem-quote">
+                    一体化光伏屋顶建筑由光伏电池板和智能天窗组成，智能天窗具备移动端控制功能，设计更加环保，工作更为智能；太阳能板利用太阳能发电，实现零耗能建筑。
+                  </blockquote>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </span>
+      </div>
+
+      <!--第三张-->
+      <div>
+        <span class="layui-colorpicker-trigger-span">
+          <div class="layui-row">
+
+            <div class="layui-col-md5">
+              <div class="grid-demo grid-demo-bg1">
+                <img src="img/suanfatu.jpg" style="width:400px; height:300px;  ">
+              </div>
+            </div>
+
+            <div class="layui-col-md7">
+              <div class="grid-demo">
+                <div class="part2" style=" left:800px; top:1000px; width:650px">
+                  <br><br>
+                  <blockquote class="layui-elem-quote">
+                    修正的HT模型和熵权分析法结合，提出了感知光伏倾角算法计算全年太阳辐射能量最大的光伏倾角；提出了最佳顶部天窗排布模型确定室内最佳采光的天窗分布位置，上述设计方案均可在设计平台网页端查询。
+                  </blockquote>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </span>
+      </div>
+
+      <!--第四张-->
+      <div>
+        <span class="layui-colorpicker-trigger-span">
+          <div class="layui-row">
+            <div class="layui-col-md6">
+              <div class="grid-demo grid-demo-bg1">
+                <img src="img/guangxue1.jpg" style="width:400px; height:300px;  ">
+              </div>
+            </div>
+
+            <div class="layui-col-md6">
+              <div class="grid-demo">
+                <img src="img/guangxue2.jpg" style="width:400px; height:300px;  ">
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top: 20px; margin-left: 10%;  width: 80%;">
+
+            <blockquote class="layui-elem-quote">
+              上左图为采用智能天窗排布的采光，天窗排布算法中通过对透过天窗射入室内的光线建立天窗排布模型，以确定最佳的天窗面积和天窗排布方式，在尽可能使用最小的天窗总面积使室内光线最均匀适度。</blockquote>
+
+          </div>
+        </span>
+      </div>
+
+      <!--第四张-->
+      <div>
+        <span class="layui-colorpicker-trigger-span">
+          <div class="layui-row">
+            <div class="layui-col-md6" style="top: 20px;">
+              <div class="grid-demo grid-demo-bg1">
+                <img src="img/rexue1.jpg" style="width:445px; height:200px;  ">
+              </div>
+            </div>
+
+            <div class="layui-col-md6" style="top: 20px;">
+              <div class="grid-demo">
+                <img src="img/rexue2.jpg" style="width:445px; height:200px; ">
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top: 40px; margin-left: 10%; width: 80%;">
+
+            <blockquote class="layui-elem-quote">一体化智能光伏屋顶中智能天窗将光伏阵列分割开来，增强了光伏板阵列的散热性，减小了光伏板阵列背面的温度，提高了光伏板的发电效率。
+            </blockquote>
+
+          </div>
+        </span>
+      </div>
+
+
+
     </div>
-    <div class="layui-col-md1"></div>
   </div>
-  <!--整体简述-->
+
 
 
 
   <script th:inline="javascript">
-    layui.use(['element','form'], function () {
+    layui.use(['element', 'form'], function () {
       var $ = layui.jquery
         , element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
-      var form=layui.form;
+      var form = layui.form;
 
       if ([[${ param.error }]]) {
-                layer.msg("用户名或者密码错误")
-            }
-            form.verify({
-                password: function (value) {
-                    if (value.length < 6 || value.length > 12) {
-                        return "密码长度在6~12位";
-                    }
-                }
-            });
+        layer.msg("用户名或者密码错误")
+      }
+      form.verify({
+        password: function (value) {
+          if (value.length < 6 || value.length > 12) {
+            return "密码长度在6~12位";
+          }
+        }
+      });
 
       //触发事件
       var active = {
@@ -313,6 +333,20 @@
       });
 
     });
+
+    layui.use('carousel', function () {
+      var carousel = layui.carousel;
+      //建造实例
+      carousel.render({
+        elem: '#building'
+        , width: '100%' //设置容器宽度
+        , height: '400px'
+        , arrow: 'always' //始终显示箭头
+        //,anim: 'updown' //切换动画方式
+        , interval: 3000
+      });
+    });
+
   </script>
 </body>
 

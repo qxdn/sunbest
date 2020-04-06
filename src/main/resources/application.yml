@@ -1,4 +1,11 @@
+
 spring:
-  # 环境 dev:开发环境|test:测试环境|prod:生产环境
-  profiles:
-    active: dev #激活的配置文件
+  datasource:
+    url: url
+    username: username
+    password: password
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+
+mybatis:
+  mapper-locations: classpath:mappers/*Mapper.xml
