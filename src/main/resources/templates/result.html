@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="layui/css/layui.css" media="all">
   <script type="text/javascript" src="js/echarts.min.js"></script>
   <script src="layui/layui.js" charset="utf-8"></script>
+  <script type="text/javascript" src="https://api.map.baidu.com/api?v=3.0&ak=你的密钥"></script>
 </head>
 
 
@@ -32,119 +33,177 @@
   </div>
   <div class="layui-tab">
     <ul class="layui-tab-title">
-      <li class="layui-this">倾角分析</li>
+      <li class="layui-this">坡度分析</li>
       <li>天窗分布</li>
       <li>整体性分析</li>
     </ul>
-    <div class="layui-tab-content">
+    <div class="layui-tab-content" style="background-color: #F2F2F2;">
       <!--倾角-->
       <div class="layui-tab-item layui-show">
         <div>
           <!--背景-->
           <div style="padding: 20px; background-color: #F2F2F2;">
             <div class="layui-row layui-col-space15">
-              <div class="layui-col-md6">
-                <div class="layui-card" style="height:240px;">
-                  <div class="layui-card-header">分析结果</div>
+              <div class="layui-col-md3">
+                <div class="layui-card" style="height: 240px;">
+                  <div class="layui-card-header">地理位置</div>
                   <div class="layui-card-body">
-                    <p>最佳倾角:<span th:text="${#numbers.formatDecimal(answer.bestAngle,1,2)}"></span>°</p>
-                    <hr>                              
-                    <p>年平均发电量:<span th:text="${#numbers.formatDecimal(answer.averagePowerGeneration,1,2)}"></span> kWh/m²/day</p>
-                    <hr>
-                    <p>节约照明用电:<span th:text="${#numbers.formatDecimal(answer.savePower,1,2)}"></span>kw/h</p>
-                    <hr>
-                    <p>年预计发电量:<span th:text="${#numbers.formatDecimal(answer.expectPowerGeneration,1,2)}"></span>度/年</p>
+                    <p>经度:<span th:text="${#numbers.formatDecimal(answer.lon,1,2)}"></span> °</p>
+                        <hr>                              
+                        <p>纬度:<span th:text="${#numbers.formatDecimal(answer.lat,1,2)}"></span> °</p>
+                        <hr>
+                        <p>地区:<span id='city'></span></p>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="layui-col-md3">
+                    <div class="layui-card" style="height:240px;">
+                      <div class="layui-card-header">分析结果</div>
+                      <div class="layui-card-body">
+                        <p>最佳坡度:<span th:text="${#numbers.formatDecimal(answer.bestAngle,1,3)}"></span></p>
+                        <hr>                              
+                        <p>日平均发电量:<span th:text="${#numbers.formatDecimal(answer.averagePowerGeneration,1,2)}"></span> KWh/m²/day</p>
+                        <hr>
+                        <p>节约照明用电:<span th:text="${#numbers.formatDecimal(answer.savePower,1,2)}"></span> KW/h</p>
+                        <hr>
+                        <p>年预计发电量:<span th:text="${#numbers.formatDecimal(answer.expectPowerGeneration,1,2)}"></span> KWh/m²/年</p>
+                                </div>
+                              </div>
                             </div>
-                          </div>
-                        </div>
-                        <div class="layui-col-md6"> 
-                          <div class="layui-card" style="height:240px;">
-                            <div class="layui-card-header" >倾角</div>
-                            <div class="layui-card-body" style="text-align: center;">
-                                <img src="img/showAngle.png" style="width: 500px;"  alt="倾角" />
+                            <div class="layui-col-md6"> 
+                              <div class="layui-card" style="height:240px;">
+                                <div class="layui-card-header" >坡度</div>
+                                <div class="layui-card-body" style="text-align: center;">
+                                    <img src="img/showAngle.png" style="width: 500px;"  alt="坡度" />
+                                </div>
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  </div>
-                  <div id="show" style="width: 1500px;height:600px;">
-          
-                  </div>
-                </div>
-                <!--天窗分布-->
-                <div class="layui-tab-item">
-                  <div >
-                    <!--背景-->
-                    <div style="padding: 20px; background-color: #F2F2F2;">
-                      <div class="layui-row layui-col-space15">
-                        <div class="layui-col-md6">
-                          <div class="layui-card">
-                            <div class="layui-card-header">开窗总面积</div>
-                            <div class="layui-card-body">
-                              <p>开窗面积:<span th:text="${#numbers.formatDecimal(answer.area,1,2)}"></span>m²</p>
+                      <div style="padding: 20px; background-color: #F2F2F2; ">
+                        <div class="layui-row layui-col-space15">
+                          <div class="layui-col-md1"></div>
+                          <div class="layui-col-md10" >
+                            <div id="show" style="width:100%; height:600px; margin: auto;">
+                
                             </div>
                           </div>
-                        </div>
-                        <div class="layui-col-md6">
-                          <div class="layui-card">
-                            <div class="layui-card-header">天窗总个数</div>
-                            <div class="layui-card-body">
-                              <!--TODO:天窗个数-->
-                              <p>天窗个数:<span th:text="${windowsNumber}"></span>个</p>
-                            </div>
-                          </div>
+                          <div class="layui-col-md1"></div>
                         </div>
                       </div>
                     </div>
-                    <!--TODO:图片-->
-                    <div class="layui-row" style="text-align: center; padding: 20px; background-color: #F2F2F2;">
-                        <img src="img/windows.png" alt="开窗效果" />
-                        <br><label>开窗效果</label>
-                    </div>
-                  </div>
-                </div>
-                <!--整体-->
-                <div class="layui-tab-item">
-                  <div >
-                    <!--背景-->
-                    <div style="padding: 20px; background-color: #F2F2F2;">
-                      <div class="layui-row layui-col-space15">
-                        <div class="layui-col-md6">
-                          <div class="layui-card">
-                            <div class="layui-card-header">每年预计发电量</div>
-                            <div class="layui-card-body">
-                              <p>年预计发电量:<span th:text="${#numbers.formatDecimal(answer.expectPowerGeneration,1,2)}"></span>度/年</p>
+                    <!--天窗分布-->
+                    <div class="layui-tab-item" style="background-color: #F2F2F2;">
+                      <div >
+                        <!--背景-->
+                        <div style="padding: 20px; background-color: #F2F2F2;">
+                          <div class="layui-row layui-col-space15">
+                            <div class="layui-col-md4">
+                              <div class="layui-card">
+                                <div class="layui-card-header">开窗总面积</div>
+                                <div class="layui-card-body">
+                                  <p>开窗面积:<span th:text="${#numbers.formatDecimal(answer.area,1,2)}"></span> m²</p>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="layui-col-md4">
+                                <div class="layui-card">
+                                    <div class="layui-card-header">开窗成本</div>
+                                    <div class="layui-card-body">
+                                        <p>成本:<span th:text="${#numbers.formatDecimal(windowsCos,1,2)}"></span> 元</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md4">
+                              <div class="layui-card">
+                                <div class="layui-card-header">天窗总个数</div>
+                                <div class="layui-card-body">
+                                  <!--TODO:天窗个数-->
+                                  <p>天窗个数:<span th:text="${windowsNumber}"></span> 个</p>
+                                </div>
+                              </div>
                             </div>
                           </div>
                         </div>
-                        <div class="layui-col-md6">
-                          <div class="layui-card">
-                            <div class="layui-card-header">节约照明</div>
-                            <div class="layui-card-body">
-                                  <p>节约照明用电:<span th:text="${#numbers.formatDecimal(answer.savePower,1,2)}"></span>kw/h</p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="layui-row" style="padding: 20px; background-color: #F2F2F2;">
                         <!--TODO:图片-->
-                        <div class="layui-col-md6" style="text-align: center;">
-                          <img th:if="${simulation} lt 20" src="img/simulation/20/light.png" height="400px" width="400px" alt="室内光分布" />
-                          <img th:if="${simulation} ge 20" src="img/simulation/100/light.png" height="400px" width="400px" alt="室内光分布" />
-                          <br><label>室内光分布</label>
+                        <div class="layui-row" style="text-align: center; padding: 20px; background-color: #F2F2F2;">
+                            <img th:if="${windowsNumber} eq 5" src="img/windows/20.png" alt="开窗效果" />
+                            <img th:if="${windowsNumber} eq 21" src="img/windows/100.png" alt="开窗效果" />
+                            <br><label>开窗效果</label>
                         </div>
-                        <div class="layui-col-md6" style="text-align: center; margin-top:100px;">
-                          <img th:if="${simulation} lt 20" src="img/simulation/20/heat.png" height="200px" width="400px" alt="屋顶散热效果" />
-                          <img th:if="${simulation} ge 20" src="img/simulation/100/heat.png" height="200px" width="400px" alt="屋顶散热效果" />
-                          <br><label>屋顶散热效果</label>
+                      </div>
+                    </div>
+                    <!--整体-->
+                    <div class="layui-tab-item">
+                      <div >
+                        <!--背景-->
+                        <div style="padding: 20px; background-color: #F2F2F2;">
+                          <div class="layui-row layui-col-space15">
+                            <div class="layui-col-md6">
+                              <div class="layui-card" style="height: 220px;">
+                                <div class="layui-card-header">节能</div>
+                                <div class="layui-card-body">
+                                  <br>
+                                  <p>年预计发电量:<span th:text="${#numbers.formatDecimal(answer.expectPowerGeneration,1,2)}"></span> KWh/m²/年</p>
+                                  <hr>
+                                  <p>节约照明用电:<span th:text="${#numbers.formatDecimal(answer.savePower,1,2)}"></span> KW/h</p>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="layui-col-md6">
+                              <div class="layui-card"  style="height: 220px;">
+                                <div class="layui-card-header">屋顶成本</div>
+                                <div class="layui-card-body">
+                                  <p>总体花费:<span th:text="${#numbers.formatDecimal(windowsCos+boardCos+otherCos,1,2)}"></span> 元</p>
+                                  <hr>
+                                  <p>太阳能板花费:<span th:text="${#numbers.formatDecimal(boardCos,1,2)}"></span> 元</p>
+                                  <hr>
+                                  <p>天窗花费:<span th:text="${#numbers.formatDecimal(windowsCos,1,2)}"></span> 元</p>
+                                  <hr>
+                                  <p>其他花费:<span th:text="${#numbers.formatDecimal(otherCos,1,2)}"></span> 元</p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="layui-row" style="padding: 20px; background-color: #F2F2F2;">
+                            <!--TODO:图片-->
+                            <div class="layui-col-md4" style="text-align: center;">
+                              <img src="img/simulation/light.png" height="400px" width="400px" />
+                              <br><label>传统模型室内光分布</label>
+                            </div>
+                            <div class="layui-col-md4" style="text-align: center;">
+                              <img th:if="${simulation} lt 20" src="img/simulation/20/light.png" height="400px" width="400px" alt="室内光分布" />
+                              <img th:if="${simulation} ge 20" src="img/simulation/100/light.png" height="400px" width="400px" alt="室内光分布" />
+                              <br><label>优化模型室内光分布</label>
+                            </div>
+                            <div class="layui-col-md4" style="text-align: center; margin-top: 150px;">
+                                <blockquote class="layui-elem-quote">左图为采用智能天窗排布的采光，天窗排布算法中通过对透过天窗射入室内的光线建立天窗排布模型，
+                                  以确定最佳的天窗面积和天窗排布方式，在尽可能使用最小的天窗总面积使室内光线最均匀适度。</blockquote>
+                            </div>
+                          </div>
+                          <div class="layui-row" style="padding: 20px; background-color: #F2F2F2;">
+                            <!--TODO:图片-->
+                            <div class="layui-col-md4" style="text-align: center;">
+                                <img src="img/simulation/heat.png" height="200px" width="400px" />
+                                <br><label>传统模型屋顶散热效果</label>
+                            </div>
+                            <!--TODO:图片-->
+                            <div class="layui-col-md4" style="text-align: center;">
+                              <img th:if="${simulation} lt 20" src="img/simulation/20/heat.png" height="200px" width="400px" alt="屋顶散热效果" />
+                              <img th:if="${simulation} ge 20" src="img/simulation/100/heat.png" height="200px" width="400px" alt="屋顶散热效果" />
+                              <br><label>优化模型屋顶散热效果</label>
+                            </div>
+                            <div class="layui-col-md4" style="text-align: center; margin-top: 50px;">
+                              <blockquote class="layui-elem-quote">一体化智能光伏屋顶中智能天窗将光伏阵列分割开来，增强了光伏板阵列的散热性，
+                                减小了光伏板阵列背面的温度，提高了光伏板的发电效率。</blockquote>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
 
     <script th:inline="javascript">
       var myChart = echarts.init(document.getElementById('show'));
@@ -200,12 +259,18 @@
       };
       myChart.setOption(option);
     </script>
-    <script>
+    <!--定位-->
+    <script th:inline="javascript">
       //注意：选项卡 依赖 element 模块，否则无法进行功能性操作
       layui.use('element', function () {
         var element = layui.element;
+        var $ = layui.jquery;
 
-        //…
+        var geoc = new BMap.Geocoder();
+        pt = new BMap.Point([[${ answer.lon }]], [[${ answer.lat }]]);
+        geoc.getLocation(pt, function (rs) {
+          $('#city').text(rs.address);
+        });
       });
     </script>
 </body>

@@ -162,4 +162,27 @@ public class ModelServiceImpl implements ModelService {
                 Hb,Hd,predict.getAzimuth());
     }
 
+
+    @Override
+    public Double getWindowsCos(Double area, int number) {
+        //框架
+        Double frames=3*Math.sqrt(2*area*number);
+        //挡板
+        Double fenders=area*1.5;
+        return frames+fenders;
+    }
+
+
+    @Override
+    public Double getOtherCos(Integer number) {
+        return 12.0*number+310;
+    }
+
+    @Override
+    public Double getBoardCos(Double houseArea, Double windowsArea) {
+        Double boardArea=houseArea-windowsArea;
+        int boardNumber=(int)(boardArea/0.756);
+        return 170.0*boardNumber;
+    }
+
 }
