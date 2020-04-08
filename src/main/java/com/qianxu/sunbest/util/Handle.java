@@ -128,7 +128,8 @@ public class Handle {
         double D = Math.sqrt(bb*bb+c*c);
         calrb_result output = new calrb_result();
         output.w_s = acoss(-1*tann(lat)*tann(a));
-        output.w_sr = -1*Math.min(output.w_s,Math.abs(-1*acoss(-1*aa/D)+asinn(c/D)));
+        //output.w_sr = -1*Math.min(output.w_s,Math.abs(-1*acoss(-1*aa/D)+asinn(c/D)));
+        output.w_sr = -1*Math.min(output.w_s,-1*acoss(-1*aa/D)+asinn(c/D));
         output.w_ss = Math.min(output.w_s,acoss(-1*aa/D)+asinn(c/D));
         double Rb_numerator = coss(b)*sinn(a)*sinn(lat)*(output.w_ss-output.w_sr)-
                 sinn(a)*coss(lat)*sinn(b)*coss(y)*(output.w_ss-output.w_sr)+
@@ -147,7 +148,7 @@ public class Handle {
         double Isc = 1367;
         double H0 = 24/Math.PI*Isc*(1+0.33*coss(360.0*n/365))*(coss(lat)*coss(a)*Math.sin(w_s)+
                 w_s*sinn(lat)*sinn(a));
-        output.Ht = (Hb*Rb+Hd*(Hb/H0*Rb+0.5*(1+coss(b))*(1-Hb/H0))+p/2*(Hb+Hd)*(1-coss(b)))/2;
+        output.Ht = (Hb*Rb+Hd*(Hb/H0*Rb+0.5*(1+coss(b))*(1-Hb/H0))+p/2*(Hb+Hd)*(1-coss(b)));
         output.Uopt = Math.atan((2*Hb/(Hb+Hd)+2*Hb/H0*(1-Hb/(Hb+Hd)))*(tann(lat)*tann(lat)*Math.tan(w_s)+w_s)/(
                 Hb/(Hb+Hd)+Hb/H0*(1-Hb/(Hb+Hd))+1-p)/tann(lat)/(Math.tan(w_s)-w_s))*360/2/Math.PI;
         return output;
