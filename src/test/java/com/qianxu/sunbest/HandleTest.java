@@ -127,6 +127,24 @@ public class HandleTest {
        double sum = light.Saving(E_0,roof,wall,l,b_room,delta);
        System.out.println("sum:"+sum);
 
+       //完整显示
+       double [] Ht_effmax0 = new double[12];
+       double [] Ht_eff0 = new double[12];
+       for(int i = 0,k = 0;i < 12;i++)
+       {
+           if(i == handle.month[k])
+           {
+               Ht_effmax0[i] = 0.0;
+               Ht_eff0[i] = 0.0;
+               k++;
+           }
+           else
+           {
+               Ht_effmax0[i] = Ht_effmax[i-k];
+               Ht_eff0[i] = Ht_eff[i-k];
+           }
+       }
+
        Answer answer = new Answer();
        answer.setLat(lat);
        answer.setLon(lon);
@@ -135,8 +153,8 @@ public class HandleTest {
        answer.setExpectPowerGeneration(handle.avrg_userHt(Ht_eff)*365);
        answer.setAveragePowerGeneration(handle.avrg_userHt(Ht_eff));
        answer.setArea(Ad);
-       answer.setBestPower(Ht_effmax);
-       answer.setCurrentPower(Ht_eff);
+       answer.setBestPower(Ht_effmax0);
+       answer.setCurrentPower(Ht_eff0);
        System.out.println("BESTPOWER:"+ Arrays.toString(answer.getBestPower()));
    }
 }

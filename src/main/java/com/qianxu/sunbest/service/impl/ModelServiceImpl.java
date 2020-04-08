@@ -61,6 +61,7 @@ public class ModelServiceImpl implements ModelService {
         handle.n = new int[]{17, 47, 75, 105, 135, 162, 198, 228, 258, 288, 318, 344};
         handle.y_0 = 0.0;
         handle.b_0 = 0.0;
+        handle.month = new int[]{-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1};
         DIFF diff = diffDao.getByLATAndLON(lat,lon);
         DNR dnr = dnrDao.getByLATAndLON(lat,lon);
         ArrayList<Double> Hb = handle.getHb(dnr);
@@ -125,6 +126,24 @@ public class ModelServiceImpl implements ModelService {
 //            currentpower.put((int)Math.ceil(handle.n[i]/30.0),Ht_eff[i]);
 //        }
 
+        //完整显示
+        double [] Ht_effmax0 = new double[12];
+        double [] Ht_eff0 = new double[12];
+        for(int i = 0,k = 0;i < 12;i++)
+        {
+            if(i == handle.month[k])
+            {
+                Ht_effmax0[i] = 0.0;
+                Ht_eff0[i] = 0.0;
+                k++;
+            }
+            else
+            {
+                Ht_effmax0[i] = Ht_effmax[i-k];
+                Ht_eff0[i] = Ht_eff[i-k];
+            }
+        }
+
         answer.setLat(lat);
         answer.setLon(lon);
         answer.setUserAngle(userDefine.getUserAngle());
@@ -133,8 +152,8 @@ public class ModelServiceImpl implements ModelService {
         answer.setExpectPowerGeneration(handle.avrg_userHt(Ht_eff)*365);
         answer.setAveragePowerGeneration(handle.avrg_userHt(Ht_eff));
         answer.setArea(Ad);
-        answer.setBestPower(Ht_effmax);
-        answer.setCurrentPower(Ht_eff);
+        answer.setBestPower(Ht_effmax0);
+        answer.setCurrentPower(Ht_eff0);
 
 
         return answer;

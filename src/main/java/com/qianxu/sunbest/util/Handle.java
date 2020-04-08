@@ -14,6 +14,7 @@ public class Handle {
         public int[] n = {17,47,75,105,135,162,198,228,258,288,318,344};
         public double y_0 = 0.0;
         public double b_0 = 0.0;
+        public int[] month = {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};
 
     public ArrayList<Double> getHb(DNR dnr) {//Hb
         ArrayList<Double>	Hb = new ArrayList<Double>();
@@ -59,6 +60,7 @@ public class Handle {
             j = i-cnt;
             if((Hb.get(j) <= 0)||(Hd.get(j) <= 0))
             {
+                month[cnt] = i;
                 Hb.remove(j);
                 Hd.remove(j);
                 cnt_j[cnt] = j;
