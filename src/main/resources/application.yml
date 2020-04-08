@@ -1,9 +1,9 @@
 
 spring:
   datasource:
-    url: url
-    username: username
-    password: password
+    url: jdbc:mysql://101.133.235.188/SunBest?useSSL=false&serverTimezone=UTC
+    username: root
+    password: WHUTjnjp123456**
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
 

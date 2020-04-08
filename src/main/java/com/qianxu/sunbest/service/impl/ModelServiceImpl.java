@@ -57,7 +57,10 @@ public class ModelServiceImpl implements ModelService {
             lon = lon>=0?(Math.floor(lon)+0.25):(Math.ceil(lon)-0.25);
         else
             lon = lon>=0?(Math.floor(lon)+0.75):(Math.ceil(lon)-0.75);
-
+        //handle初始化
+        handle.n = new int[]{17, 47, 75, 105, 135, 162, 198, 228, 258, 288, 318, 344};
+        handle.y_0 = 0.0;
+        handle.b_0 = 0.0;
         DIFF diff = diffDao.getByLATAndLON(lat,lon);
         DNR dnr = dnrDao.getByLATAndLON(lat,lon);
         ArrayList<Double> Hb = handle.getHb(dnr);
