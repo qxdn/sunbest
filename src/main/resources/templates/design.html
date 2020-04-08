@@ -13,7 +13,7 @@
     <script src="layui/layui.js" charset="utf-8"></script>
     <script src="step-lay/step.js"></script>
     <script type="text/javascript"
-        src="https://api.map.baidu.com/api?v=3.0&ak=sun600123"></script>
+        src="https://api.map.baidu.com/api?v=3.0&ak=你的密钥"></script>
     <style type="text/css">
         body,
         html,
@@ -186,7 +186,7 @@
                                                     <label class="layui-form-label">房屋高度</label>
                                                     <div class="layui-input-block">
                                                         <input type="text" id="b_houseHigh"
-                                                            lay-verify="required|number|houseHigh"
+                                                            lay-verify="required|number|houseHigh|RCR"
                                                             lay-reqtext="房屋高度不能为空" placeholder="请输入" autocomplete="off"
                                                             class="layui-input">
                                                     </div>
@@ -543,6 +543,15 @@
                 }, houseWidth: function (value) {
                     if (value <= 0) {
                         return '请输入正确的房屋宽度';
+                    }
+                }, RCR: function (value) {
+                    length = $('#b_houseLength').val();
+                    width = $('#b_houseWidth').val();
+                    h=$('#b_houseHigh').val()
+                    //小心字符串
+                    rcr =( 5 * h * (parseFloat(length) + parseFloat(width)) )/ (length * width);
+                    if (rcr > 10) {
+                        return '室空间比需要小于10'
                     }
                 }
             });
