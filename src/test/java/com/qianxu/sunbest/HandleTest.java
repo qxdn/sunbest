@@ -47,8 +47,8 @@ public class HandleTest {
     void Test(){
        handle.n = new int[]{17, 47, 75, 105, 135, 162, 198, 228, 258, 288, 318, 344};
        double bestAngle;
-       double lat = 30.7;
-       double lon = 108.2;
+       double lat = 30.75;
+       double lon = 139.2;
        //优化数据
        int num1at = Math.abs((int)(Math.round(Math.abs(lat)*100))%100);
        int numlon = Math.abs((int)(Math.round(Math.abs(lon)*100))%100);
