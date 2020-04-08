@@ -389,7 +389,8 @@ public class Handle {
         return Uopt_sort1*prop1+Uopt_sort2*prop2;
     }
 
-    public double[] Uopt1 = new double[n.length];
+    //public double[] Uopt1 = new double[n.length];
+    public double[] Uopt1;
 
     public double avrg_bestAngle(char index,double lat,double[] a,ArrayList<Double> Hb,ArrayList<Double> Hd,double y) {
         ArrayList<angle_result> angle_result = new ArrayList<angle_result>();
@@ -398,7 +399,7 @@ public class Handle {
         int[] index_Ht = new int[a.length];
         double bestAngle = 0.0;
         double[] HbHd_array = new double[a.length];
-
+        Uopt1 = new double[a.length];
 
         if(index == 'n')
         {

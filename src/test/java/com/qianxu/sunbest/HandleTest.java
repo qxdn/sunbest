@@ -47,8 +47,8 @@ public class HandleTest {
     void Test(){
        handle.n = new int[]{17, 47, 75, 105, 135, 162, 198, 228, 258, 288, 318, 344};
        double bestAngle;
-       double lat = 28.957;
-       double lon = 118.876;
+       double lat = 30.7;
+       double lon = 108.2;
        //优化数据
        int num1at = Math.abs((int)(Math.round(Math.abs(lat)*100))%100);
        int numlon = Math.abs((int)(Math.round(Math.abs(lon)*100))%100);
@@ -83,8 +83,9 @@ public class HandleTest {
            System.out.print(ht+" ");
        System.out.println();
         for(int i = 0;i < Ht_usermax.length;i++)
-            Ht_usermax[i] = handle.userHt('y',lat,handle.paraCal(handle.n),Hb,Hd,Math.max(handle.Uopt1[i],0.0))[i];
-       handle.b_0 = 20.0;
+            //Ht_usermax[i] = handle.userHt('y',lat,handle.paraCal(handle.n),Hb,Hd,Math.max(handle.Uopt1[i],0.0))[i];
+            Ht_usermax[i] = handle.userHt('y',lat,handle.paraCal(handle.n),Hb,Hd,bestAngle)[i];
+       //handle.b_0 = 20.0;
        System.out.print("Ht_usermax:");
         for(double ht:Ht_usermax)
            System.out.print(ht+" ");

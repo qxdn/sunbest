@@ -86,8 +86,9 @@ public class ModelServiceImpl implements ModelService {
 
         //最佳倾角对应Ht
         for(int i = 0;i < Ht_usermax.length;i++)
-            Ht_usermax[i] = handle.userHt('y',lat,handle.paraCal(handle.n),Hb,Hd,Math.max(handle.Uopt1[i],0.0))[i];
-        handle.b_0 = 20.0;
+           // Ht_usermax[i] = handle.userHt('y',lat,handle.paraCal(handle.n),Hb,Hd,Math.max(handle.Uopt1[i],0.0))[i];
+         Ht_usermax[i] = handle.userHt('y',lat,handle.paraCal(handle.n),Hb,Hd,bestAngle)[i];
+        //handle.b_0 = 20.0;
 
         //Ht对应发电量
         for(int i = 0;i < Ht_user.length;i++) {
