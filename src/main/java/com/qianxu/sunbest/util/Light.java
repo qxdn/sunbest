@@ -96,11 +96,12 @@ public class Light {
                 a = 0.01909;
                 b = 1.731;
             }
-            if((Math.round(hx) <= 11)&&(Math.round(hx) >=9))
+            if(Math.round(hx) >=9)
             {
                 a = 0.02253;
                 b = 3.009;
-            }}
+            }
+        }
         else {
             if ((Math.round(hx) <= 4)&&(Math.round(hx) >=2))
             {
@@ -122,7 +123,7 @@ public class Light {
                 a = 0.01795;
                 b = 8.646;
             }
-            if((Math.round(hx) <= 22)&&(Math.round(hx) >=16))
+            if(Math.round(hx) >=16)
             {
                 a = 0.01893;
                 b = 14.28;

@@ -128,9 +128,25 @@ public class Handle {
         double D = Math.sqrt(bb*bb+c*c);
         calrb_result output = new calrb_result();
         output.w_s = acoss(-1*tann(lat)*tann(a));
-        //output.w_sr = -1*Math.min(output.w_s,Math.abs(-1*acoss(-1*aa/D)+asinn(c/D)));
-        output.w_sr = -1*Math.min(output.w_s,-1*acoss(-1*aa/D)+asinn(c/D));
-        output.w_ss = Math.min(output.w_s,acoss(-1*aa/D)+asinn(c/D));
+        //output.w_s = Math.min(Math.abs(acoss(-1*tann(lat)*tann(a))),Math.abs(acoss(-1*tann(lat-b)*tann(a))));
+        //output.w_s = Math.min(acoss(-1*tann(lat)*tann(a)),acoss(-1*tann(lat-b)*tann(a)));
+      /*  output.w_sr = -1*Math.min(output.w_s,-1*acoss(-1*aa/D)+asinn(c/D));
+        output.w_ss = Math.min(output.w_s,acoss(-1*aa/D)+asinn(c/D));*/
+      output.w_sr = -1*Math.min(output.w_s,Math.abs(-1*acoss(-1*aa/D)+asinn(c/D)));
+      output.w_ss = Math.min(output.w_s,acoss(-1*aa/D)+asinn(c/D));
+      /*  output.w_sr = Math.max(-1*output.w_s,acoss(-1*aa/D)-asinn(c/D));
+        output.w_ss = Math.min(output.w_s,acoss(-1*aa/D)+asinn(c/D));*/
+        /*output.w_sr = -1*Math.min(output.w_s,-1*acoss(-1*aa/D)-asinn(c/D));
+        output.w_ss = Math.min(output.w_s,acoss(-1*aa/D)+asinn(c/D));*/
+        /*output.w_sr = -1*Math.min(output.w_s,-1*acoss(-1*aa/D)+asinn(c/D));
+        output.w_ss = Math.min(output.w_s,acoss(-1*aa/D)+asinn(c/D));*/
+
+       /* double AA = coss(lat)/(sinn(Math.max(y,0.0001)*sinn(Math.max(b,0.0001))))+sinn(lat)/tann(Math.max(y,0.0001));
+        double BB = tann(a)*(coss(lat)/tann(Math.max(y,0.0001))-sinn(lat)/(sinn(Math.max(y,0.0001))*tann(Math.max(b,0.0001))));
+
+        output.w_sr = -1*Math.min(output.w_s,acoss((AA*BB-Math.sqrt(AA*AA-BB*BB+1))/(AA*AA+1)));
+        output.w_ss = Math.min(output.w_s,acoss((AA*BB+Math.sqrt(AA*AA-BB*BB+1))/(AA*AA+1)));*/
+
         double Rb_numerator = coss(b)*sinn(a)*sinn(lat)*(output.w_ss-output.w_sr)-
                 sinn(a)*coss(lat)*sinn(b)*coss(y)*(output.w_ss-output.w_sr)+
                 coss(lat)*coss(a)*coss(b)*(Math.sin(output.w_ss)-Math.sin(output.w_sr))+
@@ -138,6 +154,14 @@ public class Handle {
                 coss(a)*sinn(b)*sinn(y)*(Math.cos(output.w_ss)-Math.cos(output.w_sr));
         double Rb_denominator = coss(lat)*coss(a)*Math.sin(output.w_s)+output.w_s*sinn(lat)*sinn(a);
         output.Rb = Rb_numerator/Rb_denominator/2;
+
+ /*       output.w_s = Math.min(acoss(-1*tann(lat)*tann(a)),acoss(-1*tann(lat-b)*tann(a)));
+        output.w_sr = output.w_s;
+        output.w_ss = acoss(-1*tann(lat)*tann(a));
+        double Rb_numerator2 = coss(lat-b)*coss(a)*Math.sin(output.w_s)+output.w_s*sinn(lat-b)*sinn(a);
+        double Rb_denominator2 = coss(lat)*coss(a)*Math.sin(output.w_ss)+output.w_ss*sinn(lat)*sinn(a);
+        output.Rb = Rb_numerator2/Rb_denominator2;
+*/
         return output;
     }
 
@@ -146,9 +170,12 @@ public class Handle {
         //计算Ht、Uopt
         tilt_result output = new tilt_result();
         double Isc = 1367;
-        double H0 = 24/Math.PI*Isc*(1+0.33*coss(360.0*n/365))*(coss(lat)*coss(a)*Math.sin(w_s)+
+        double  H0 = 24/Math.PI*Isc*(1+0.33*coss(360.0*n/365))*(coss(lat)*coss(a)*Math.sin(w_s)+
                 w_s*sinn(lat)*sinn(a));
-        output.Ht = (Hb*Rb+Hd*(Hb/H0*Rb+0.5*(1+coss(b))*(1-Hb/H0))+p/2*(Hb+Hd)*(1-coss(b)));
+        //output.Ht = Hb*Rb+Hd*(Hb/H0*Rb+0.5*(1+coss(b))*(1-Hb/H0))+this.p/2*(Hb+Hd)*(1-coss(b));
+        output.Ht = Hb*Rb+Hd*(Hb/H0*Rb+0.5*(1+coss(b))*(1-Hb/H0));
+        //output.Ht = Hb*Rb+Hd*(1+coss(b))/2+(Hb+Hd)*this.p*(1-coss(b))/2;
+        //output.Ht = Hb*Rb+Hd*(1+coss(b))/2;
         output.Uopt = Math.atan((2*Hb/(Hb+Hd)+2*Hb/H0*(1-Hb/(Hb+Hd)))*(tann(lat)*tann(lat)*Math.tan(w_s)+w_s)/(
                 Hb/(Hb+Hd)+Hb/H0*(1-Hb/(Hb+Hd))+1-p)/tann(lat)/(Math.tan(w_s)-w_s))*360/2/Math.PI;
         return output;
@@ -165,6 +192,7 @@ public class Handle {
         double[] Ht_1 = new double[a.length];
         double[] Ht_2 = new double[a.length];
         double[] maxHt = new double[a.length];
+        //System.out.println("thisb0:"+this.b_0);
         if(index == 'y')
         {
             for(int i = 0;i < a.length;i++)
@@ -430,7 +458,7 @@ public class Handle {
         double[] Ht = new double[a.length];
 
         this.b_0 = b;
-
+        //System.out.println("thisb0:"+this.b_0);
         angle_result = bestAngle(index,lat,a,Hb,Hd);
         for(int i = 0;i < a.length;i++)
         {

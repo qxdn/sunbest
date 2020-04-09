@@ -47,8 +47,14 @@ public class HandleTest {
     void Test(){
        handle.n = new int[]{17, 47, 75, 105, 135, 162, 198, 228, 258, 288, 318, 344};
        double bestAngle;
-       double lat = 28.2;
-       double lon = 112.93;
+       /*double lat = 22;
+       double lon = 60;*/
+       /*double lat = 30.7;
+       double lon = 139.2;*/
+       /*double lat = 30.75;
+       double lon = 114.25;*/
+       double lat = 23.25;
+       double lon = 113.25;
        //优化数据
        int num1at = Math.abs((int)(Math.round(Math.abs(lat)*100))%100);
        int numlon = Math.abs((int)(Math.round(Math.abs(lon)*100))%100);
@@ -83,7 +89,7 @@ public class HandleTest {
            System.out.print(ht+" ");
        System.out.println();
         for(int i = 0;i < Ht_usermax.length;i++)
-           // Ht_usermax[i] = handle.userHt('y',lat,handle.paraCal(handle.n),Hb,Hd,Math.max(handle.Uopt1[i],0.0))[i];
+            //Ht_usermax[i] = handle.userHt('y',lat,handle.paraCal(handle.n),Hb,Hd,Math.max(handle.Uopt1[i],0.0))[i];
             Ht_usermax[i] = handle.userHt('y',lat,handle.paraCal(handle.n),Hb,Hd,bestAngle)[i];
        //handle.b_0 = 20.0;
        System.out.print("Ht_usermax:");
@@ -91,6 +97,7 @@ public class HandleTest {
            System.out.print(ht+" ");
        System.out.println();
        System.out.println("avrg_userHt:"+handle.avrg_userHt(Ht_user));
+       System.out.println("avrg_userHtmax:"+handle.avrg_userHt(Ht_usermax));
        for(int i = 0;i < Ht_user.length;i++)
        {
            Ht_effmax[i] = Ht_usermax[i]*light.PV_efficience[0];
