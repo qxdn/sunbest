@@ -30,10 +30,10 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
     @Override
     public Integer addUser(User user) {
-        String password=user.getPassword();
+        String password = user.getPassword();
         user.setPassword(passwordEncoder.encode(password));
         userDao.addUser(user);
-        Map<String,Object> maps=new HashMap<>();
+        Map<String, Object> maps = new HashMap<>();
         maps.put("userId", user.getId());
         maps.put("roleIds", user.getRoles());
         return userDao.addUserRef(maps);
@@ -41,8 +41,8 @@ public class UserServiceImpl implements UserDetailsService, UserService {
 
     @Override
     public Boolean isUserExits(String email) {
-        User user=userDao.getUserByEmail(email);
-        if(null==user){
+        User user = userDao.getUserByEmail(email);
+        if (null == user) {
             return false;
         }
         return true;
@@ -57,14 +57,25 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         log.debug("获取user");
-        User user=userDao.getUserByEmail(username);
-        if(user==null){
+        User user = userDao.getUserByEmail(username);
+        if (user == null) {
             log.debug("用户不存在");
             throw new UsernameNotFoundException("用户不存在");
         }
         log.debug("获取角色");
-        List<Role> roles=userDao.getRoleByUid(user.getId());
+        List<Role> roles = userDao.getRoleByUid(user.getId());
         user.setRoles(roles);
         return user;
+    }
+
+    @Override
+    public Boolean androidLogin(String email, String password) {
+        User user = userDao.getUserByEmail(email);
+        log.info(password);
+        log.info(user.toString());
+        if (user != null && passwordEncoder.matches(password, user.getPassword())) {
+            return true;
+        }
+        return false;
     }
 }
