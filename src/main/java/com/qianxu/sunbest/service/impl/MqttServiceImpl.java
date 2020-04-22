@@ -25,22 +25,28 @@ public class MqttServiceImpl implements MqttService {
     @Autowired
     MqttSub mqttSub;
 
-
     @Override
     public void sendMessage(String topic, String msg) throws MqttException {
-            MqttMessage message = new MqttMessage();
-            message.setQos(1);
-            message.setRetained(true);
-            message.setPayload(msg.getBytes());
-            MqttTopic mqttTopic = client.getTopic(topic);
-            MqttDeliveryToken token = mqttTopic.publish(message);//发布主题
-            token.waitForCompletion();
+        sendMessage(topic, msg, false);
+    }
+
+    @Override
+    public void sendMessage(String topic, String msg, boolean retained) throws MqttException {
+        MqttMessage message = new MqttMessage();
+        message.setQos(1);
+        message.setRetained(true);
+        message.setPayload(msg.getBytes());
+        // 不保留
+        message.setRetained(retained);
+        MqttTopic mqttTopic = client.getTopic(topic);
+        MqttDeliveryToken token = mqttTopic.publish(message);// 发布主题
+        token.waitForCompletion();
     }
 
     @Override
     public void subscribe(String[] topic, int[] qos) {
         try {
-            client.subscribe(topic,qos);
+            client.subscribe(topic, qos);
         } catch (MqttException e) {
             log.error(e.toString());
         }
@@ -57,9 +63,9 @@ public class MqttServiceImpl implements MqttService {
 
     @Override
     public void subscribe() {
-        List<String> subs=mqttPropConfig.getSubTopic();
-        for(String sub:subs){
-            subscribe(sub,0);
+        List<String> subs = mqttPropConfig.getSubTopic();
+        for (String sub : subs) {
+            subscribe(sub, 0);
         }
     }
 

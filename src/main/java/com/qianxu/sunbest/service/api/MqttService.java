@@ -5,6 +5,7 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 
 public interface MqttService {
     public void sendMessage(String topic,String msg) throws MqttException;
+    public void sendMessage(String topic,String msg,boolean retained) throws MqttException;
     public void subscribe(String[] topic,int[] qos);
     public void subscribe(String topic,int qos);
     public void subscribe();

@@ -31,5 +31,5 @@ build/
 .vscode/
 
 #resources
-src/main/resources/weather.properties
+
 src/main/resources/application-dev.yml
