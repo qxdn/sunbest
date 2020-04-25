@@ -6,4 +6,5 @@ public interface UserService {
     public Integer addUser(User user);
     public Boolean isUserExits(String email);
     public Boolean androidLogin(String email,String password);
+    public Boolean changePassword(String email,String newPass);
 }

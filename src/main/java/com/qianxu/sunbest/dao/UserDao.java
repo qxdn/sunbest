@@ -16,4 +16,6 @@ public interface UserDao {
     public int addUser(User user);
 
     public int addUserRef(Map<String,Object> map);
+
+    public int changePassword(User user);
 }

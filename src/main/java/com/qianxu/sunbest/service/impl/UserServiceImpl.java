@@ -78,4 +78,23 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         }
         return false;
     }
+
+    @Override
+    public Boolean changePassword(String email, String newPass) {
+        Boolean status=false;
+        if(newPass.length()>12||newPass.length()<6){
+            status=false;
+            return status;
+        }
+
+        User user=userDao.getUserByEmail(email);
+        user.setPassword(passwordEncoder.encode(newPass));
+        
+        int lines= userDao.changePassword(user);
+        if(lines>0){
+            status=true;
+        }
+
+        return status;
+    }
 }

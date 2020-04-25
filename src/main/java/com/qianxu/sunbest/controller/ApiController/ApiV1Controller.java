@@ -42,4 +42,9 @@ public class ApiV1Controller {
     public Boolean Login(@RequestParam String email,@RequestParam String password){
         return userService.androidLogin(email, password);
     }
+
+    @PostMapping("/androidChangePassword")
+    public Boolean changePassword(@RequestParam String email,@RequestParam String password){
+        return userService.changePassword(email, password);
+    }
 }
