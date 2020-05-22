@@ -53,8 +53,8 @@ public class HandleTest {
        double lon = 139.2;*/
        /*double lat = 30.75;
        double lon = 114.25;*/
-       double lat = 23.25;
-       double lon = 113.25;
+       double lat = 28.2282;
+       double lon = 112.9388;
        //优化数据
        int num1at = Math.abs((int)(Math.round(Math.abs(lat)*100))%100);
        int numlon = Math.abs((int)(Math.round(Math.abs(lon)*100))%100);
@@ -83,7 +83,7 @@ public class HandleTest {
        bestAngle = handle.avrg_bestAngle('y',lat,handle.paraCal(handle.n),
                Hb,Hd,0.0);
        System.out.println("bestangle:"+bestAngle);
-       Ht_user = handle.userHt('y',lat,handle.paraCal(handle.n),Hb,Hd,0).clone();
+       Ht_user = handle.userHt('y',lat,handle.paraCal(handle.n),Hb,Hd,Math.abs(0-bestAngle)).clone();
        System.out.print("Ht_user:");
        for(double ht:Ht_user)
            System.out.print(ht+" ");
@@ -92,6 +92,9 @@ public class HandleTest {
             //Ht_usermax[i] = handle.userHt('y',lat,handle.paraCal(handle.n),Hb,Hd,Math.max(handle.Uopt1[i],0.0))[i];
             Ht_usermax[i] = handle.userHt('y',lat,handle.paraCal(handle.n),Hb,Hd,bestAngle)[i];
        //handle.b_0 = 20.0;
+
+       Ht_usermax = handle.userHt('y',lat,handle.paraCal(handle.n),Hb,Hd,0).clone();
+
        System.out.print("Ht_usermax:");
         for(double ht:Ht_usermax)
            System.out.print(ht+" ");

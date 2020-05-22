@@ -81,13 +81,16 @@ public class ModelServiceImpl implements ModelService {
                 Hb,Hd,userDefine.getAzimuth());
 
         //输入倾角对应Ht
+        /*Ht_user = handle.userHt(userDefine.getAzimuth()>0?'n':'y',lat,handle.paraCal(handle.n),Hb,Hd,
+                userDefine.getUserAngle()).clone();*///origin
         Ht_user = handle.userHt(userDefine.getAzimuth()>0?'n':'y',lat,handle.paraCal(handle.n),Hb,Hd,
-                userDefine.getUserAngle()).clone();
+                Math.abs(userDefine.getUserAngle()-bestAngle)).clone();
 
         //最佳倾角对应Ht
         for(int i = 0;i < Ht_usermax.length;i++)
            // Ht_usermax[i] = handle.userHt('y',lat,handle.paraCal(handle.n),Hb,Hd,Math.max(handle.Uopt1[i],0.0))[i];
-         Ht_usermax[i] = handle.userHt('y',lat,handle.paraCal(handle.n),Hb,Hd,bestAngle)[i];
+         //Ht_usermax[i] = handle.userHt('y',lat,handle.paraCal(handle.n),Hb,Hd,bestAngle)[i];//origin
+            Ht_usermax[i] = handle.userHt('y',lat,handle.paraCal(handle.n),Hb,Hd,0)[i];
         //handle.b_0 = 20.0;
 
         //Ht对应发电量

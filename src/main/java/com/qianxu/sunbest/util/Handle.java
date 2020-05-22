@@ -130,10 +130,10 @@ public class Handle {
         output.w_s = acoss(-1*tann(lat)*tann(a));
         //output.w_s = Math.min(Math.abs(acoss(-1*tann(lat)*tann(a))),Math.abs(acoss(-1*tann(lat-b)*tann(a))));
         //output.w_s = Math.min(acoss(-1*tann(lat)*tann(a)),acoss(-1*tann(lat-b)*tann(a)));
-      /*  output.w_sr = -1*Math.min(output.w_s,-1*acoss(-1*aa/D)+asinn(c/D));
-        output.w_ss = Math.min(output.w_s,acoss(-1*aa/D)+asinn(c/D));*/
-      output.w_sr = -1*Math.min(output.w_s,Math.abs(-1*acoss(-1*aa/D)+asinn(c/D)));
-      output.w_ss = Math.min(output.w_s,acoss(-1*aa/D)+asinn(c/D));
+        output.w_sr = -1*Math.min(output.w_s,-1*acoss(-1*aa/D)+asinn(c/D));
+        output.w_ss = Math.min(output.w_s,acoss(-1*aa/D)+asinn(c/D));
+     /* output.w_sr = -1*Math.min(output.w_s,Math.abs(-1*acoss(-1*aa/D)+asinn(c/D)));
+      output.w_ss = Math.min(output.w_s,acoss(-1*aa/D)+asinn(c/D));*///origin
       /*  output.w_sr = Math.max(-1*output.w_s,acoss(-1*aa/D)-asinn(c/D));
         output.w_ss = Math.min(output.w_s,acoss(-1*aa/D)+asinn(c/D));*/
         /*output.w_sr = -1*Math.min(output.w_s,-1*acoss(-1*aa/D)-asinn(c/D));
@@ -153,8 +153,8 @@ public class Handle {
                 coss(a)*coss(y)*sinn(lat)*sinn(b)*(Math.sin(output.w_ss)-Math.sin(output.w_sr))-
                 coss(a)*sinn(b)*sinn(y)*(Math.cos(output.w_ss)-Math.cos(output.w_sr));
         double Rb_denominator = coss(lat)*coss(a)*Math.sin(output.w_s)+output.w_s*sinn(lat)*sinn(a);
-        output.Rb = Rb_numerator/Rb_denominator/2;
-
+        //output.Rb = Rb_numerator/Rb_denominator/2;//origin
+        output.Rb = Rb_numerator/Rb_denominator;
  /*       output.w_s = Math.min(acoss(-1*tann(lat)*tann(a)),acoss(-1*tann(lat-b)*tann(a)));
         output.w_sr = output.w_s;
         output.w_ss = acoss(-1*tann(lat)*tann(a));
