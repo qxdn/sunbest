@@ -7,12 +7,13 @@
 - 天气模型来自和风天气 
 
 ## 构建之前
-在```resources```文件夹里面更改```design.html```和```result.html```里面的
+在```resources```文件夹里面更改```design.html```和```result.html```里面的你的密匙替换成百度key地图申请到的apikey
 ```html
  <script type="text/javascript" src="https://api.map.baidu.com/api?v=3.0&ak=你的密钥"></script>
 ```
-将你的密钥替换为百度地图API申请到的密钥
-在```resources```文件夹里面更改```application.yml```
+
+
+在```resources```文件夹里面更改```application.yml```替换数据库
 ```yml
 spring:
   datasource:
@@ -22,7 +23,38 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
 ```
-替换数据库
+
+在```resources```文件夹里面更改```mqtt.properties```替换mqtt服务器
+```properties
+#mqtt
+mqtt.username=javaserver
+mqtt.password=123456
+
+#mqtt client
+mqtt.clientId=weatherServer
+
+
+mqtt.subTopic[0]=getSunMsg
+mqtt.pubTopic[0]=sunMsg
+
+#mqtt tcp
+mqtt.tcpHost=your host
+```
+在```resources```文件夹里面更改```weather.properties```替换和风天气的apikey
+```properties
+#预设纬度
+weather.lat=30.58
+#预设经度
+weather.lon=114.27
+#免费api
+weather.freeUrl=https://free-api.heweather.net/s6
+#付费api
+weather.apiUrl=https://api.heweather.net/s6
+#付费key
+weather.apiKey=your key
+#免费key
+weather.freeKey=your key
+```
 
 ## 使用说明
 

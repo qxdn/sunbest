@@ -2,12 +2,14 @@ package com.qianxu.sunbest.controller.ApiController;
 
 import com.qianxu.sunbest.model.*;
 import com.qianxu.sunbest.service.api.ModelService;
+import com.qianxu.sunbest.service.api.UserService;
 import com.qianxu.sunbest.util.AngleConvert;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.text.DecimalFormat;
@@ -18,6 +20,9 @@ import java.text.DecimalFormat;
 public class ApiV1Controller {
     @Autowired
     ModelService modelService;
+
+    @Autowired
+    UserService userService;
 
     @PostMapping("/getAngle")
     public Answer designApi(UserDefine userDefine){
@@ -31,5 +36,10 @@ public class ApiV1Controller {
         log.debug("转换坡度");
         angle=AngleConvert.convertAngle2Slope(angle);
         return df.format(angle);
+    }
+
+    @PostMapping("/androidLogin")
+    public Boolean Login(@RequestParam String email,@RequestParam String password){
+        return userService.androidLogin(email, password);
     }
 }

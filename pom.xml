@@ -10,12 +10,12 @@
 	</parent>
 	<groupId>com.qianxu</groupId>
 	<artifactId>sunbest</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>1.0.1-SNAPSHOT</version>
 	<name>demo</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
-		<java.version>1.8</java.version>
+		<java.version>11</java.version>
 	</properties>
 
 	<dependencies>
@@ -75,6 +75,23 @@
 		<dependency>
 			<groupId>org.thymeleaf.extras</groupId>
 			<artifactId>thymeleaf-extras-springsecurity5</artifactId>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.5.11</version>
+		</dependency>
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.2.61</version>
+		</dependency>
+		<!--mqtt-->
+		<dependency>
+			<groupId>org.eclipse.paho</groupId>
+			<artifactId>org.eclipse.paho.client.mqttv3</artifactId>
+			<version>1.2.1</version>
 		</dependency>
 	</dependencies>
 
